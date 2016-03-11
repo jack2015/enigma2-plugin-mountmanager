@@ -1,0 +1,392 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-02-28 20:05+0100\n"
+"PO-Revision-Date: 2015-10-29 22:36+0200\n"
+"Last-Translator: Dimitrij <Dima-73@inbox.lv>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"X-Generator: Poedit 1.8.4\n"
+"Language-Team: \n"
+
+msgid " as "
+msgstr " как "
+
+msgid " from "
+msgstr " от "
+
+msgid "%s points"
+msgstr "%s точки"
+
+msgid "'%s' not found!"
+msgstr "'%s' не найден!"
+
+msgid "'/usr/share/usb.ids' not found!\nPlease install package usbutils!"
+
+msgstr ""
+"'/usr/share/usb.ids' не найден!\n"
+"Пожалуйста, установите пакет usbutils!"
+
+msgid "Add entry"
+msgstr "Добавить запись"
+
+msgid "Add new entry"
+msgstr "Добавить новую запись"
+
+msgid "All device umount.Select action:"
+msgstr "Все устройства отмонтированы. Выберите действие:"
+
+msgid ""
+"Attention!\n"
+"Not highly recommend that you remove or edit the system entry!\n"
+msgstr ""
+"Предупреждение!\n"
+"Крайне не рекомендуем удалять или редактировать системные записи из fstab!\n"
+
+msgid "Backup restored!"
+msgstr "Бекап востановлен!"
+
+msgid ""
+"Can't unmount partiton, make sure it is not being used for swap or record/"
+"timeshift paths!"
+msgstr ""
+"Отмонтировать не удалось, убедитесь что на устройстве не используется swap "
+"или не идет запись/таймшифт в текущий момент!"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid ""
+"Cannot unmount from the previous device from /media/hdd.\n"
+"A record in progress, timeshift or some external tools (like samba, nfsd,"
+"transmission and etc) may cause this problem.\n"
+"Please stop this actions/applications and try again!"
+msgstr ""
+"Не получается отмонтировать предыдущее устройство от /media/hdd.\n"
+"Текущая запись, таймшифт или запущенные программы (например swap, samba, "
+"nfsd, transmission или что то другое) могут быть проблемой.\n"
+"Пожалуйста, остановите эти действия/приложения и попробуйте отмонтировать "
+"устройство снова!"
+
+msgid "Choose where to mount your devices in fstab to UUID:"
+msgstr "Выберите место монтирования устройства в fstab по UUID:"
+
+msgid "Clone selected entry"
+msgstr "Клонировать выбранную запись"
+
+msgid "Close plugin"
+msgstr "Закрыть плагин"
+
+msgid ""
+"Device changes need a system restart to take effects.\n"
+"Restart your Box now?"
+msgstr ""
+"Для применения изменений требуется перезагрузка ресивера.\n"
+"Выполнить перезагрузку сейчас?"
+
+msgid "Device name:"
+msgstr "Имя устройства:"
+
+msgid "Device: "
+msgstr "Устройство: "
+
+msgid ""
+"Devices changes need a system restart to take effects.\n"
+"Restart your Box now?"
+msgstr ""
+"Для применения изменений требуется перезагрузка ресивера.\n"
+"Выполнить перезагрузку сейчас?"
+
+msgid "Dump frequency:"
+msgstr "Dump значение:"
+
+msgid "Edit"
+msgstr "Редактировать"
+
+msgid "Edit fstab"
+msgstr "Редактор fstab"
+
+msgid "Enter directory"
+msgstr "Введите каталог"
+
+msgid "Error in ioctl '%s'!"
+msgstr "Ошибка в ioctl для '%s'!"
+
+msgid "Error opening output file '%s'!"
+msgstr "Ошибка при открытии выходного файла '%s'!"
+
+msgid "Error response '%s'!"
+msgstr "Ошибка ответа '%s'!"
+
+msgid ""
+"Error!\n"
+"The same mount point!"
+msgstr ""
+"Ошибка!\n"
+"Одинаковые точки монтирования!"
+
+msgid "Exit"
+msgstr "Выход"
+
+msgid ""
+"Failed to read /etc/fstab! Restore fstab.backup or edit the file manually."
+msgstr ""
+"Ошибка чтения /etc/fstab! Вост. fstab.backup или измените файл в ручную"
+
+msgid "File system type:"
+msgstr "Файловая система:"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "HARD DISK: "
+msgstr "ЖЕСТКИЙ ДИСК: "
+
+msgid "Install / Info"
+msgstr "Установка модулей / Инфо"
+
+msgid "Label for device"
+msgstr "Этикетка для устройства"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "Manage you devices mountpoints"
+msgstr "Монтирование/отмонтирование накопителей"
+
+msgid "Mount"
+msgstr "Монтирование"
+
+msgid "Mount Manager"
+msgstr "Менеджер монтирования"
+
+msgid "Mount Manager - edit label/fstab"
+msgstr "Менеджер монтирования - редактор этикеток/fstab"
+
+msgid "Mount all device from the fstab"
+msgstr "Смонтировать все устройства из fstab"
+
+msgid ""
+"Mount current device failed!\n"
+"Maybe this device is not spelled out in the fstab?"
+msgstr ""
+"Ошибка монтирования текущего устройства!\n"
+"Может быть, это устройство не прописано в fstab?"
+
+msgid "Mount current device from the fstab"
+msgstr "Смонтировать текущее устройство по записи в fstab"
+
+msgid "Mount current device to %s"
+msgstr "Смонтировать текущее устройство в %s"
+
+msgid "Mount failed!"
+msgstr "Ошибка монтирования!"
+
+msgid "Mount point:"
+msgstr "Точка монтирования:"
+
+msgid "Mount: "
+msgstr "Монтирование: "
+
+msgid "None"
+msgstr "нет"
+
+msgid "Not found /etc/fstab.backup!"
+msgstr "Не найден /etc/fstab.backup!"
+
+msgid "Not found restore file!"
+msgstr "Не найден файл восстановления!"
+
+msgid "Open editor"
+msgstr "Открыть редактор"
+
+msgid "Open selector"
+msgstr "Открыть селектор"
+
+msgid "Options:"
+msgstr "Опции:"
+
+msgid "Pass num value 1 use only for root filesystem (mountpoint '/')!"
+msgstr ""
+"Значение номера пропуска 1 применяется только для корневой файловой системы "
+"(точка монтирования '/')!"
+
+msgid "Pass number:"
+msgstr "Номер пропуска:"
+
+msgid "Please enter a value for every input field!"
+msgstr "Пожалуйста, введите значение для каждого поля ввода!"
+
+msgid "Please enter label for %s:"
+msgstr "Пожалуйста, введите этикетку для %s:"
+
+msgid "Please install tune2fs"
+msgstr "Пожалуйста, инсталлируйте tune2fs"
+
+msgid "Please wait..."
+msgstr "Пожалуйста, подождите..."
+
+msgid "Really delete the selected entry?"
+msgstr "Действительно удалить выбранную запись?"
+
+msgid "Really edit the selected entry?"
+msgstr "Действительно редактировать выбранную запись?"
+
+msgid "Really save in fstab mount by UUID:\n"
+msgstr "Действительно сохранить в fstab монтирование по UUID:\n"
+
+msgid "Really unmount "
+msgstr "Действительно отмонтировать "
+
+msgid "Really use and mount %s as HDD ?"
+msgstr "Действительно использовать и смонтировать %s как HDD ?"
+
+msgid "Remove entry"
+msgstr "Удалить запись"
+
+msgid "Reset USB devices"
+msgstr "Сброс устройств USB"
+
+msgid "Reset successful '%s'!"
+msgstr "Сброс '%s' прошел успешно!"
+
+msgid "Restart Box..."
+msgstr "Перезагрузка ресивера..."
+
+msgid "Restart your box"
+msgstr "Перезагрузка вашего ресивера"
+
+msgid "Restore backup fstab"
+msgstr "Восстановление бекапа fstab"
+
+msgid "Restore default fstab"
+msgstr "Восстановить дефолтный fstab"
+
+msgid "Restore fstab"
+msgstr "Восстановить fstab"
+
+msgid "Restore fstab.backup"
+msgstr "Восстановить fstab.backup"
+
+msgid "Return with saving"
+msgstr "Возврат с сохранением"
+
+msgid "Return without saving"
+msgstr "Возврат без сохранения"
+
+msgid "Run mount -a"
+msgstr "Выполнить mount -a"
+
+msgid "Save mount in fstab"
+msgstr "Сохранение в fstab"
+
+msgid "Select action:"
+msgstr "Выберите действие:"
+
+msgid "Select device for reset:"
+msgstr "Выбор устройства для сброса:"
+
+msgid "Select mount action for %s:"
+msgstr "Выберите вариант монтирования для %s:"
+
+msgid "Select system info or install module:"
+msgstr "Выберите системную информацию или установку модулей:"
+
+msgid "Setup Mounts"
+msgstr "Настройки монтирования"
+
+msgid "Size: "
+msgstr "объем: "
+
+msgid "TB"
+msgstr "TB"
+
+msgid "The device is already mounted!"
+msgstr "Это устройство уже смонтировано!"
+
+msgid "This Device is already mounted as HDD."
+msgstr "Этот устройство уже смонтировано как HDD!"
+
+msgid "This entry already exists in the fstab!"
+msgstr "Такая запись уже существует в fstab!"
+
+msgid "Type: "
+msgstr "Тип: "
+
+msgid "Unmount"
+msgstr "Отмонтировать"
+
+msgid "Use as HDD"
+msgstr "Использовать как HDD"
+
+msgid "Wait please while scanning for devices..."
+msgstr "Пожалуйста, подождите, идет сканирование устройств хранения..."
+
+msgid "Wait please while scanning your box devices..."
+msgstr ""
+"Пожалуйста, подождите, сканирование устройств хранения Вашего ресивера..."
+
+msgid "Warning, this device is used for more than one mount point!\n"
+msgstr ""
+"Внимание, для этого устройства используется более чем в одна точка "
+"монтирования!\n"
+
+msgid "auto"
+msgstr "auto"
+
+msgid "device name: "
+msgstr "имя устройства:"
+
+msgid "dump (0 - create backup off): "
+msgstr "dump (0 - создание бекапа отключено): "
+
+msgid "file system type (auto): "
+msgstr "файловая система (auto):"
+
+msgid "fstab restored!"
+msgstr "fstab восстановлен!"
+
+msgid "fstab-Editor"
+msgstr "Редактор-fstab"
+
+msgid "install ext2 kernel module"
+msgstr "установить модуль ядра ext2"
+
+msgid "install ext3 kernel module"
+msgstr "установить модуль ядра ext3"
+
+msgid "install filesystem utilities (e2fsprogs)"
+msgstr "установить файловую утилиту (e2fsprogs)"
+
+msgid "install filesystem utilities (e2fsprogs-tune2fs)"
+msgstr "установить файловую утилиту (e2fsprogs-tune2fs)"
+
+msgid "install linux utilities (fdisk)"
+msgstr "установить утилиту линукса (fdisk)"
+
+msgid "install linux utilities (util-linux-blkid)"
+msgstr "установить утилиту линукса (util-linux-blkid)"
+
+msgid "mount point: "
+msgstr "точка монтирования: "
+
+msgid "options mount file system (defaults): "
+msgstr "опции монтирования файловой системы (defaults): "
+
+msgid "pass num (0 - fsck off): "
+msgstr "номер пропуска (0 - fsck отключен): "
+
+msgid "select:"
+msgstr "выбор:"
+
+msgid "unavailable"
+msgstr "неизвестно"
+
+msgid "eject DVD"
+msgstr "извлечь DVD"
+
+msgid "update usb.ids (www.linux-usb.org)"
+msgstr "обновить usb.ids (www.linux-usb.org)"
