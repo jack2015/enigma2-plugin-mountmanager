@@ -1,6 +1,6 @@
 from . import _
 from Screens.Screen import Screen
-from enigma import eTimer
+from enigma import eTimer, getBoxType
 from Screens.MessageBox import MessageBox
 from Screens.Setup import SetupSummary
 from Screens.Standby import TryQuitMainloop
@@ -24,7 +24,7 @@ from time import sleep
 from re import search
 import fstabViewer
 
-plugin_version = "1.9"
+plugin_version = "2.0"
 
 # Equivalent of the _IO('U', 20) constant in the linux kernel.
 USBDEVFS_RESET = ord('U') << (4*2) | 20 # same as USBDEVFS_RESET= 21780
@@ -142,7 +142,9 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				continue
 			device = parts[3]
 			mmc = False
-			if device and device == 'mmcblk0p1':
+			if getBoxType() in ('vusolo4k') and search('mmcblk0p[1-9]',device):
+				continue
+			if device and search('mmcblk[0-9]p[1-9]',device):
 				mmc = True
 			if not mmc and not search('sd[a-z][1-9]',device):
 				continue
@@ -163,54 +165,85 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 	def buildMy_rec(self, device, moremount = []):
 		global device2
 		device2 = ''
+		card = False
 		try:
-			if device.find('1') > 0:
+			if device.find('1') > 1:
 				device2 = device.replace('1', '')
 		except:
 			device2 = ''
 		try:
-			if device.find('2') > 0:
+			if device.find('2') > 1:
 				device2 = device.replace('2', '')
 		except:
 			device2 = ''
 		try:
-			if device.find('3') > 0:
+			if device.find('3') > 1:
 				device2 = device.replace('3', '')
 		except:
 			device2 = ''
 		try:
-			if device.find('4') > 0:
+			if device.find('4') > 1:
 				device2 = device.replace('4', '')
 		except:
 			device2 = ''
 		try:
-			if device.find('5') > 0:
+			if device.find('5') > 1:
 				device2 = device.replace('5', '')
 		except:
 			device2 = ''
 		try:
-			if device.find('6') > 0:
+			if device.find('6') > 1:
 				device2 = device.replace('6', '')
 		except:
 			device2 = ''
 		try:
-			if device.find('7') > 0:
+			if device.find('7') > 1:
 				device2 = device.replace('7', '')
 		except:
 			device2 = ''
 		try:
-			if device.find('8') > 0:
+			if device.find('8') > 1:
 				device2 = device.replace('8', '')
 		except:
 			device2 = ''
 		try:
-			if device.find('9') > 0:
-				device2 = device.replace('9', '')
+			if device.find('p1') > 1:
+				device2 = device.replace('p1', '')
 		except:
 			device2 = ''
 		try:
-			if device == 'mmcblk0p1':
-				device2 = 'mmcblk0'
+			if device.find('p2') > 1:
+				device2 = device.replace('p2', '')
+		except:
+			device2 = ''
+		try:
+			if device.find('p3') > 1:
+				device2 = device.replace('p3', '')
+		except:
+			device2 = ''
+		try:
+			if device.find('p4') > 1:
+				device2 = device.replace('p4', '')
+		except:
+			device2 = ''
+		try:
+			if device.find('p5') > 1:
+				device2 = device.replace('p5', '')
+		except:
+			device2 = ''
+		try:
+			if device.find('p6') > 1:
+				device2 = device.replace('p6', '')
+		except:
+			device2 = ''
+		try:
+			if device.find('p7') > 1:
+				device2 = device.replace('p7', '')
+		except:
+			device2 = ''
+		try:
+			if device.find('p8') > 1:
+				device2 = device.replace('p8', '')
 		except:
 			device2 = ''
 		try:
@@ -220,8 +253,9 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		d2 = device
 		model = "-?-"
 		name = "USB: "
-		if devicetype.find('sdhci') != -1:
+		if 'sdhci' in devicetype or device2.startswith('mmcblk'):
 			name = _("MMC: ")
+			card = True
 			try:
 				model = file('/sys/block/' + device2 + '/device/name').read()
 				model = str(model).replace('\n', '')
@@ -235,10 +269,33 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				model = str(model).replace('\n', '')
 			except:
 				pass
+		try:
+			if card:
+				dev_name = 'mmcblk0'
+			else:
+				dev_name = device2
+			data = open("/sys/block/%s/queue/rotational" % dev_name, "r").read().strip()
+			rotational = int(data)
+		except:
+			rotational = True
+		try:
+			if card:
+				dev_name = 'mmcblk0'
+			else:
+				dev_name = device2
+			data = open("/sys/block/%s/removable" % dev_name, "r").read().strip()
+			removable = int(data)
+		except:
+			removable = False
 		des = ''
 		if devicetype.find('/devices/pci') != -1 or devicetype.find('ahci') != -1:
 			name = _("HARD DISK: ")
 			mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_hdd.png'
+			if not card and not removable and not rotational:
+				name = "SSD: "
+				mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_ssd.png'
+		if name == "USB: " and not removable and rotational:
+			mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_usb_drive.png'
 		fullname = name + model
 		self.Console = Console()
 		self.Console.ePopen("sfdisk -l /dev/sd? | grep swap | awk '{print $(NF-9)}' >/tmp/devices.tmp")
@@ -286,9 +343,9 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				elif ((size / 1024) / 1024) > 1:
 					capacity = (size / 1024) / 1024
 					des = _("Size: ") + str(capacity) + " " + _("GB")
-					if capacity > 256 and name == _("USB: "):
-						mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_usb_drive.png'
-						partition = True
+					#if capacity > 256 and name == _("USB: "):
+					#	mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_usb_drive.png'
+					#	partition = True
 				else:
 					des = _("Size: ") + str(size / 1024) + " " + _("MB")
 			else:
@@ -303,9 +360,9 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				elif (((size / 2) / 1024) / 1024) > 1:
 					capacity = ((size / 2) / 1024) / 1024
 					des = _("Size: ") + str(capacity) + " " + _("GB")
-					if capacity > 256 and name == _("USB: "):
-						mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_usb_drive.png'
-						partition = True
+					#if capacity > 256 and name == _("USB: "):
+					#	mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_usb_drive.png'
+					#	partition = True
 				else:
 					des = _("Size: ") + str((size / 2) / 1024) + " " + _("MB")
 		f.close()
@@ -647,7 +704,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 
 class DeviceMountPanelConf(Screen, ConfigListScreen):
 	skin = """
-	<screen position="center,center" size="730,300" title="Setup Mounts">
+	<screen position="center,center" size="730,330" title="Setup Mounts">
 		<ePixmap pixmap="skin_default/buttons/red.png" position="15,0" size="140,40" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/green.png" position="165,0" size="140,40" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/yellow.png" position="315,0" size="140,40" alphatest="on" />
@@ -657,20 +714,21 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 		<widget name="key_yellow" position="315,0" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
 		<widget name="key_blue" position="490,0" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
 		<widget name="config" position="0,60" size="730,215" scrollbarMode="showOnDemand"/>
-		<widget name="Linconn" position="30,375" size="680,40" font="Regular;18" halign="center" valign="center" backgroundColor="#9f1313"/>
+		<widget name="Linconn" position="30,305" size="680,25" font="Regular;18" halign="center" valign="center" backgroundColor="#9f1313"/>
 	</screen>"""
 
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.list = []
-		ConfigListScreen.__init__(self, self.list)
 		Screen.setTitle(self, _("Setup Mounts"))
-		self['key_green'] = Label(_("Save mount in fstab"))
+		self['key_green'] = Label(_("TRIM"))
 		self['key_red'] = Label(_("Label for device"))
 		self['key_yellow'] = Label(_("Edit fstab"))
 		self['key_blue'] = Label(_("Install / Info"))
 		self['Linconn'] = Label(_("Wait please while scanning your box devices..."))
-		self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'green': self.saveMypoints, 'red': self.editLabel, 'yellow': self.editFstab, 'blue': self.systemInfo, 'back': self.close})
+		self['actions'] = ActionMap(['WizardActions'], {'back': self.close, 'ok': self.saveMypoints})
+		self['colorActions'] = ActionMap(['ColorActions'], {'green': self.TrimOptions, 'red': self.editLabel, 'yellow': self.editFstab, 'blue': self.systemInfo}, -2)
+		ConfigListScreen.__init__(self, self.list)
 		self.checkMount = False
 		self.Checktimer = eTimer()
 		self.Checktimer.callback.append(self.check_cur_Umount)
@@ -700,7 +758,9 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				continue
 			device = parts[3]
 			mmc = False
-			if device and device == 'mmcblk0p1':
+			if getBoxType() in ('vusolo4k') and search('mmcblk0p[1-9]',device):
+				continue
+			if device and search('mmcblk[0-9]p[1-9]',device):
 				mmc = True
 			if not mmc and not search('sd[a-z][1-9]',device):
 				continue
@@ -713,59 +773,90 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 		f.close()
 		self['config'].list = self.list
 		self['config'].l.setList(self.list)
-		self['Linconn'].hide()
+		self['Linconn'] = Label(_("Press OK...") + _("Save mount in fstab"))
 
 	def buildMy_rec(self, device):
 		global device2
 		device2 = ''
+		card = False
 		try:
-			if device.find('1') > 0:
+			if device.find('1') > 1:
 				device2 = device.replace('1', '')
 		except:
 			device2 = ''
 		try:
-			if device.find('2') > 0:
+			if device.find('2') > 1:
 				device2 = device.replace('2', '')
 		except:
 			device2 = ''
 		try:
-			if device.find('3') > 0:
+			if device.find('3') > 1:
 				device2 = device.replace('3', '')
 		except:
 			device2 = ''
 		try:
-			if device.find('4') > 0:
+			if device.find('4') > 1:
 				device2 = device.replace('4', '')
 		except:
 			device2 = ''
 		try:
-			if device.find('5') > 0:
+			if device.find('5') > 1:
 				device2 = device.replace('5', '')
 		except:
 			device2 = ''
 		try:
-			if device.find('6') > 0:
+			if device.find('6') > 1:
 				device2 = device.replace('6', '')
 		except:
 			device2 = ''
 		try:
-			if device.find('7') > 0:
+			if device.find('7') > 1:
 				device2 = device.replace('7', '')
 		except:
 			device2 = ''
 		try:
-			if device.find('8') > 0:
+			if device.find('8') > 1:
 				device2 = device.replace('8', '')
 		except:
 			device2 = ''
 		try:
-			if device.find('9') > 0:
-				device2 = device.replace('9', '')
+			if device.find('p1') > 1:
+				device2 = device.replace('p1', '')
 		except:
 			device2 = ''
 		try:
-			if device =='mmcblk0p1':
-				device2 = 'mmcblk0'
+			if device.find('p2') > 1:
+				device2 = device.replace('p2', '')
+		except:
+			device2 = ''
+		try:
+			if device.find('p3') > 1:
+				device2 = device.replace('p3', '')
+		except:
+			device2 = ''
+		try:
+			if device.find('p4') > 1:
+				device2 = device.replace('p4', '')
+		except:
+			device2 = ''
+		try:
+			if device.find('p5') > 1:
+				device2 = device.replace('p5', '')
+		except:
+			device2 = ''
+		try:
+			if device.find('p6') > 1:
+				device2 = device.replace('p6', '')
+		except:
+			device2 = ''
+		try:
+			if device.find('p7') > 1:
+				device2 = device.replace('p7', '')
+		except:
+			device2 = ''
+		try:
+			if device.find('p8') > 1:
+				device2 = device.replace('p8', '')
 		except:
 			device2 = ''
 		try:
@@ -775,8 +866,9 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 		d2 = device
 		model = '-?-'
 		name = "USB: "
-		if 'sdhci' in devicetype:
+		if 'sdhci' in devicetype or device2.startswith('mmcblk'):
 			name = "MMC: "
+			card = True
 			try:
 				model = file('/sys/block/' + device2 + '/device/name').read()
 				model = str(model).replace('\n', '')
@@ -789,8 +881,31 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			except:
 				pass
 		des = ''
+		try:
+			if card:
+				dev_name = 'mmcblk0'
+			else:
+				dev_name = device2
+			data = open("/sys/block/%s/queue/rotational" % dev_name, "r").read().strip()
+			rotational = int(data)
+		except:
+			rotational = True
+		try:
+			if card:
+				dev_name = 'mmcblk0'
+			else:
+				dev_name = device2
+			data = open("/sys/block/%s/removable" % dev_name, "r").read().strip()
+			removable = int(data)
+		except:
+			removable = False
 		if devicetype.find('/devices/pci') != -1 or devicetype.find('/devices/platform/strict-ahci') != -1:
 			name = _("HARD DISK: ")
+			if not card and not removable and not rotational:
+				name = "SSD: "
+				mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_ssd.png'
+		if name == "USB: " and not removable and rotational:
+			mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_usb_drive.png'
 		name = name + model
 		f = open('/proc/mounts', 'r')
 		for line in f.readlines():
@@ -832,6 +947,11 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 		choices = [('/media/' + device, '/media/' + device), ('/media/hdd', '/media/hdd'), ('/media/hdd2', '/media/hdd2'), ('/media/hdd3', '/media/hdd3'), ('/media/usb_hdd', '/media/usb_hdd'), ('/media/usb', '/media/usb'), ('/media/usb2', '/media/usb2'), ('/media/usb3', '/media/usb3')]
 		if 'MMC' in name:
 			choices.append(('/media/mmc', '/media/mmc'))
+			choices.append(('/media/mmc1', '/media/mmc1'))
+			choices.append(('/media/mmc2', '/media/mmc2'))
+		if not fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyo") and not fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/flashexpander.pyo"):
+			if (removable and rotational) or (not removable and not rotational and card):
+				choices.append(('/usr', '/usr'))
 		item = NoSave(ConfigSelection(default='/media/' + device, choices=choices))
 		if dtype == 'Linux':
 			dtype = 'ext3'
@@ -839,9 +959,50 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			dtype = 'auto'
 		item.value = d1.strip()
 		text = name + ' ' + des + ' /dev/' + device
-		res = getConfigListEntry(text, item, device, dtype)
+		ssd = 'SSD:' in name
+		res = getConfigListEntry(text, item, device, dtype, ssd)
 		if des != '' and self.list.append(res):
 			pass
+
+	def TrimOptions(self):
+		self.label_device = ""
+		if not os.path.exists('/sbin/tune2fs'):
+			self.session.open(MessageBox, _("Please install tune2fs"), MessageBox.TYPE_INFO)
+			return
+		sel = self['config'].getCurrent()
+		if sel and len(sel) > 3 and sel[4]:
+			des = sel[2]
+			if des and des != "":
+				des = des.replace('\n', '\t')
+				device = '/dev/' + des
+				if os.path.exists(device):
+					self.label_device = device
+			mylist = [
+			(_("Set discard mount option"), self.trimaction1),
+			(_("Unset discard mount option"), self.trimaction2),
+			(_("Show discard status"), self.trimaction3),
+			]
+			self.session.openWithCallback(
+			self.menuCallback,
+			ChoiceBox,
+			list = mylist,
+			title = _("TRIM (if supported) working only for SSD device.\nRequires filesystem ext4 and flag discard."),
+			)
+
+	def trimaction1(self):
+		from Screens.Console import Console as myConsole
+		cmd = "/sbin/tune2fs -o discard %s && /sbin/tune2fs -l %s | grep 'Default mount options'" % (self.label_device, self.label_device)
+		self.session.open(myConsole,_("Set discard mount option"),[cmd])
+
+	def trimaction2(self):
+		from Screens.Console import Console as myConsole
+		cmd = "/sbin/tune2fs -o^discard %s && /sbin/tune2fs -l %s | grep 'Default mount options'" % (self.label_device, self.label_device)
+		self.session.open(myConsole,_("Unset discard mount option"),[cmd])
+
+	def trimaction3(self):
+		from Screens.Console import Console as myConsole
+		cmd = "/sbin/tune2fs -l %s | grep 'Default mount options'" % self.label_device
+		self.session.open(myConsole,_("Show discard status"),[cmd])
 
 	def editFstab(self):
 		self.session.open(fstabViewer.fstabViewerScreen)
@@ -920,13 +1081,18 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 		(_("df -h"), self.action2),
 		(_("sfdisk -l"), self.action3),
 		(_("blkid"), self.action4),
+		(_("eject DVD"), self.action11),
 		(_("install ext2 kernel module"), self.action5),
 		(_("install ext3 kernel module"), self.action6),
 		(_("install filesystem utilities (e2fsprogs)"), self.action7),
 		(_("install filesystem utilities (e2fsprogs-tune2fs)"), self.action8),
 		(_("install linux utilities (fdisk)"), self.action9),
 		(_("install linux utilities (util-linux-blkid)"), self.action10),
-		(_("eject DVD"), self.action11),
+		(_("install linux utilities (hdparm)"), self.action13),
+		(_("install filesystem utilities (fuse-exfat)"), self.action14),
+		(_("install filesystem utilities (ntfs-3g)"), self.action15),
+		(_("install linux utilities (smartmontools)"), self.action16),
+		(_("install linux utilities (parted)"), self.action17),
 		]
 		if fileExists('/usr/share/usb.ids'):
 			mylist.append((_("update usb.ids (www.linux-usb.org)"), self.action12))
@@ -985,6 +1151,26 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 		from Screens.Console import Console as myConsole
 		self.session.open(myConsole,_("*****usb.ids*****"),["chmod 755 %s && %s " % (update_usb_ids, update_usb_ids)])
 
+	def action13(self):
+		from Screens.Console import Console as myConsole
+		self.session.open(myConsole,_("*****hdparm*****"),["opkg install hdparm"])
+
+	def action14(self):
+		from Screens.Console import Console as myConsole
+		self.session.open(myConsole,_("*****fuse-exfat*****"),["opkg install fuse-exfat"])
+
+	def action15(self):
+		from Screens.Console import Console as myConsole
+		self.session.open(myConsole,_("*****ntfs-3g*****"),["opkg install ntfs-3g"])
+
+	def action16(self):
+		from Screens.Console import Console as myConsole
+		self.session.open(myConsole,_("*****smartmontools*****"),["opkg install smartmontools"])
+
+	def action17(self):
+		from Screens.Console import Console as myConsole
+		self.session.open(myConsole,_("*****parted*****"),["opkg install parted"])
+
 	def saveMypoints(self):
 		if len(self['config'].list) < 1: return
 		message = _("Really save in fstab mount by UUID:\n")
@@ -1025,7 +1211,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			for line in lines_mount:
 				if '/omb' not in line:
 					l = line.split(' ')
-					if l[0][:7] == '/dev/sd' or l[0][:7] == 'mmcblk0p1':
+					if l[0][:7] == '/dev/sd' or l[0][:7].startswith('mmcblk'):
 						self.checkMount = True
 		self.select_action()
 

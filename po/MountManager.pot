@@ -562,3 +562,35 @@ msgstr ""
 #: plugin.py:932
 msgid "update usb.ids (www.linux-usb.org)"
 msgstr ""
+
+msgid "install linux utilities (hdparm)"
+msgstr ""
+
+msgid "install filesystem utilities (fuse-exfat)"
+msgstr ""
+
+msgid "install filesystem utilities (ntfs-3g)"
+msgstr ""
+
+msgid "install linux utilities (parted)"
+msgstr ""
+
+msgid "install linux utilities (smartmontools)"
+msgstr ""
+
+msgid "Press OK..."
+msgstr ""
+
+msgid "Set discard mount option"
+msgstr ""
+
+msgid "Unset discard mount option"
+msgstr ""
+
+msgid "Show discard status"
+msgstr ""
+
+msgid "TRIM (if supported) working only for SSD device.\nRequires filesystem ext4 and flag discard."
+msgstr ""
+
+

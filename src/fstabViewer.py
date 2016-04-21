@@ -305,14 +305,14 @@ class fstabEditorScreen(Screen, ConfigListScreen, HelpableScreen):
 		if 	self.addEntry:
 			self.devicename = NoSave(ConfigText(default = "", fixed_size = False))
 			self.mountpoint = NoSave(ConfigText(default = "", fixed_size = False))
-			self.fstype = NoSave(ConfigSelection([("auto", "auto"),("ext2", "ext2"),("ext3", "ext3"),("ext4", "ext4"),("cifs","cifs"),("nfs", "nfs"),("swap", "swap"),("proc", "proc"),("tmpfs", "tmpfs"),("jffs2", "jffs2"),("rootfs", "rootfs"),("usbfs", "usbfs"),("usbdevfs", "usbdevfs"),("devpts", "devpts"),("reiserfs", "reiserfs"),("btrfs", "btrfs"),("ntfs-3g", "ntfs-3g"),("vfat", "vfat"),("fat", "fat"),("ntfs", "ntfs"), ("xfs", "xfs")], default = "auto"))
+			self.fstype = NoSave(ConfigSelection([("auto", "auto"),("ext2", "ext2"),("ext3", "ext3"),("ext4", "ext4"),("cifs","cifs"),("nfs", "nfs"),("swap", "swap"),("btrfs", "btrfs"),("ntfs-3g", "ntfs-3g"),("vfat", "vfat"),("fat", "fat"),("ntfs", "ntfs"),("udf", "udf"),("iso9660", "iso9660"),("cdfs", "cdfs"),("exfat", "exfat")], default = "auto"))
 			self.options = NoSave(ConfigText(default = "defaults", fixed_size = False))
 			self.dumpfreq = NoSave(ConfigInteger(limits=(0, 1), default=0))
 			self.passnum = NoSave(ConfigSelection([("0","0"),("1","1"),("2","2")], default = "0"))
 		else:
 			self.devicename = NoSave(ConfigText(fixed_size = False, default = entryList[self.selectedEntry][0]))
 			self.mountpoint = NoSave(ConfigText(fixed_size = False, default = entryList[self.selectedEntry][1]))
-			self.fstype = NoSave(ConfigSelection([("auto", "auto"),("ext2", "ext2"),("ext3", "ext3"),("ext4", "ext4"),("cifs", "cifs"),("nfs", "nfs"),("swap", "swap"),("proc", "proc"),("tmpfs", "tmpfs"),("jffs2", "jffs2"),("rootfs", "rootfs"),("usbfs", "usbfs"),("usbdevfs", "usbdevfs"),("devpts", "devpts"),("reiserfs", "reiserfs"),("btrfs", "btrfs"),("ntfs-3g", "ntfs-3g"),("vfat", "vfat"),("fat", "fat"),("ntfs", "ntfs"), ("xfs", "xfs")], default = entryList[self.selectedEntry][2]))
+			self.fstype = NoSave(ConfigSelection([("auto", "auto"),("ext2", "ext2"),("ext3", "ext3"),("ext4", "ext4"),("cifs", "cifs"),("nfs", "nfs"),("swap", "swap"),("btrfs", "btrfs"),("ntfs-3g", "ntfs-3g"),("vfat", "vfat"),("fat", "fat"),("ntfs", "ntfs"),("udf", "udf"),("iso9660", "iso9660"),("cdfs", "cdfs"),("exfat", "exfat")], default = entryList[self.selectedEntry][2]))
 			self.options = NoSave(ConfigText(fixed_size = False, default = entryList[self.selectedEntry][3]))
 			self.dumpfreq = NoSave(ConfigInteger(limits=(0, 1), default = int(entryList[self.selectedEntry][4])))
 			self.passnum = NoSave(ConfigSelection([("0","0"),("1","1"),("2","2")], default = entryList[self.selectedEntry][5]))
