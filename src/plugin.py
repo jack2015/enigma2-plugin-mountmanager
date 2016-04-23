@@ -24,12 +24,13 @@ from time import sleep
 from re import search
 import fstabViewer
 
-plugin_version = "2.0"
+plugin_version = "2.1"
 
 # Equivalent of the _IO('U', 20) constant in the linux kernel.
 USBDEVFS_RESET = ord('U') << (4*2) | 20 # same as USBDEVFS_RESET= 21780
 EXT_LSUSB = "/usr/bin/lsusb"
 update_usb_ids = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/update-usbids.sh"
+make_exfat = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/make-exfat.sh"
 device2 = ''
 
 class DevicesMountPanel(Screen, ConfigListScreen):
@@ -1149,7 +1150,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 
 	def action12(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****usb.ids*****"),["chmod 755 %s && %s " % (update_usb_ids, update_usb_ids)])
+		self.session.open(myConsole,_("*****usb.ids*****"),["chmod 755 %s && %s" % (update_usb_ids, update_usb_ids)])
 
 	def action13(self):
 		from Screens.Console import Console as myConsole
@@ -1157,7 +1158,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 
 	def action14(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****fuse-exfat*****"),["opkg install fuse-exfat"])
+		self.session.open(myConsole,_("*****fuse-exfat*****"),["opkg install fuse-exfat && chmod 755 %s && %s" % (make_exfat, make_exfat)])
 
 	def action15(self):
 		from Screens.Console import Console as myConsole
