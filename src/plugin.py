@@ -727,7 +727,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 		self['key_yellow'] = Label(_("Edit fstab"))
 		self['key_blue'] = Label(_("Install / Info"))
 		self['Linconn'] = Label(_("Wait please while scanning your box devices..."))
-		self['actions'] = ActionMap(['WizardActions'], {'back': self.close, 'ok': self.saveMypoints})
+		self['myactions'] = ActionMap(['WizardActions'], {'back': self.close, 'ok': self.saveMypoints}, -2)
 		self['colorActions'] = ActionMap(['ColorActions'], {'green': self.TrimOptions, 'red': self.editLabel, 'yellow': self.editFstab, 'blue': self.systemInfo}, -2)
 		ConfigListScreen.__init__(self, self.list)
 		self.checkMount = False
