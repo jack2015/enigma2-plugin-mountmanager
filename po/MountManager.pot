@@ -593,4 +593,8 @@ msgstr ""
 msgid "TRIM (if supported) working only for SSD device.\nRequires filesystem ext4 and flag discard."
 msgstr ""
 
+msgid "*****Spin down HDD*****"
+msgstr ""
 
+msgid "Spin down HDD before shutdown box"
+msgstr ""

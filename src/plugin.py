@@ -24,13 +24,14 @@ from time import sleep
 from re import search
 import fstabViewer
 
-plugin_version = "2.1"
+plugin_version = "2.2"
 
 # Equivalent of the _IO('U', 20) constant in the linux kernel.
 USBDEVFS_RESET = ord('U') << (4*2) | 20 # same as USBDEVFS_RESET= 21780
 EXT_LSUSB = "/usr/bin/lsusb"
 update_usb_ids = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/update-usbids.sh"
 make_exfat = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/make-exfat.sh"
+umountfs = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/umountfs.sh"
 device2 = ''
 
 class DevicesMountPanel(Screen, ConfigListScreen):
@@ -1095,14 +1096,11 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 		(_("install linux utilities (smartmontools)"), self.action16),
 		(_("install linux utilities (parted)"), self.action17),
 		]
-		if fileExists('/usr/share/usb.ids'):
+		if fileExists('/usr/share/usb.ids') or fileExists('/usr/share/usb.ids.gz'):
 			mylist.append((_("update usb.ids (www.linux-usb.org)"), self.action12))
-		self.session.openWithCallback(
-		self.menuCallback,
-		ChoiceBox,
-		list = mylist,
-		title= _("Select system info or install module:"),
-		)
+		if not self.spinDown() and fileExists('/etc/init.d/umountfs'):
+			mylist.append((_("Spin down HDD before shutdown box"), self.action18))
+		self.session.openWithCallback(self.menuCallback, ChoiceBox, list = mylist,title= _("Select system info or install module:"))
 
 	def action1(self):
 		from Screens.Console import Console as myConsole
@@ -1171,6 +1169,20 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 	def action17(self):
 		from Screens.Console import Console as myConsole
 		self.session.open(myConsole,_("*****parted*****"),["opkg install parted"])
+
+	def action18(self):
+		from Screens.Console import Console as myConsole
+		self.session.open(myConsole,_("*****Spin down HDD*****"),["cp %s /etc/init.d/umountfs && chmod 755 /etc/init.d/umountfs && cat /etc/init.d/umountfs" % umountfs])
+
+	def spinDown(self):
+		try:
+			f = open('/etc/init.d/umountfs').readlines()
+			for line in f:
+				if _('sdparm') in line:
+					return True
+		except:
+			pass
+		return False
 
 	def saveMypoints(self):
 		if len(self['config'].list) < 1: return
