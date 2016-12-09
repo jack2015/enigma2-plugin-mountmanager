@@ -144,7 +144,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				continue
 			device = parts[3]
 			mmc = False
-			if getBoxType() in ('vusolo4k', "hd51") and search('mmcblk0p[1-9]',device):
+			if getBoxType() in ('vusolo4k', "hd51", 'hd52', 'vuultimo4k', 'vuuno4k') and search('mmcblk0p[1-9]',device):
 				continue
 			if device and search('mmcblk[0-9]p[1-9]',device):
 				mmc = True
@@ -760,7 +760,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				continue
 			device = parts[3]
 			mmc = False
-			if getBoxType() in ('vusolo4k', "hd51") and search('mmcblk0p[1-9]',device):
+			if getBoxType() in ('vusolo4k', "hd51", 'hd52', 'vuultimo4k', 'vuuno4k') and search('mmcblk0p[1-9]',device):
 				continue
 			if device and search('mmcblk[0-9]p[1-9]',device):
 				mmc = True
