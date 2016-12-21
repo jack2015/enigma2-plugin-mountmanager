@@ -290,7 +290,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		except:
 			removable = False
 		des = ''
-		if devicetype.find('/devices/pci') != -1 or devicetype.find('ahci') != -1:
+		if devicetype.find('/devices/pci') != -1 or devicetype.find('ahci') != -1 or devicetype.find('.sata/') != -1:
 			name = _("HARD DISK: ")
 			mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_hdd.png'
 			if not card and not removable and not rotational:
@@ -901,7 +901,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			removable = int(data)
 		except:
 			removable = False
-		if devicetype.find('/devices/pci') != -1 or devicetype.find('/devices/platform/strict-ahci') != -1:
+		if devicetype.find('/devices/pci') != -1 or devicetype.find('/devices/platform/strict-ahci') != -1 or devicetype.find('.sata/') != -1:
 			name = _("HARD DISK: ")
 			if not card and not removable and not rotational:
 				name = "SSD: "
