@@ -1,6 +1,6 @@
 from . import _
 from Screens.Screen import Screen
-from enigma import eTimer, getBoxType
+from enigma import eTimer
 from Screens.MessageBox import MessageBox
 from Screens.Setup import SetupSummary
 from Screens.Standby import TryQuitMainloop
@@ -13,6 +13,7 @@ from Components.config import getConfigListEntry, config, ConfigSelection, NoSav
 from Components.Sources.List import List
 from Components.Console import Console
 from Components.Sources.StaticText import StaticText
+from Tools.HardwareInfo import HardwareInfo
 from Screens.VirtualKeyBoard import VirtualKeyBoard
 from Plugins.Plugin import PluginDescriptor
 from Tools.LoadPixmap import LoadPixmap
@@ -24,7 +25,7 @@ from time import sleep
 from re import search
 import fstabViewer
 
-plugin_version = "2.2"
+plugin_version = "2.3"
 
 # Equivalent of the _IO('U', 20) constant in the linux kernel.
 USBDEVFS_RESET = ord('U') << (4*2) | 20 # same as USBDEVFS_RESET= 21780
@@ -33,6 +34,54 @@ update_usb_ids = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/upd
 make_exfat = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/make-exfat.sh"
 umountfs = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/umountfs.sh"
 device2 = ''
+
+try:
+	device_name = HardwareInfo().get_device_name()
+except:
+	device_name = None
+
+BOX_NAME = "none"
+MODEL_NAME = "none"
+if os.path.exists("/proc/stb/info/boxtype"):
+	BOX_NAME = "all"
+	try:
+		f = open("/proc/stb/info/boxtype")
+		MODEL_NAME = f.read().strip()
+		f.close()
+	except:
+		pass
+elif os.path.exists("/proc/stb/info/hwmodel"):
+	BOX_NAME = "all"
+	try:
+		f = open("/proc/stb/info/hwmodel")
+		MODEL_NAME = f.read().strip()
+		f.close()
+	except:
+		pass
+elif os.path.exists("/proc/stb/info/vumodel"):
+	BOX_NAME = "vu"
+	try:
+		f = open("/proc/stb/info/vumodel")
+		MODEL_NAME = f.read().strip()
+		f.close()
+	except:
+		pass
+elif device_name and device_name.startswith('dm') and os.path.exists("/proc/stb/info/model"):
+	BOX_NAME = "dmm"
+	try:
+		f = open("/proc/stb/info/model")
+		MODEL_NAME = f.read().strip()
+		f.close()
+	except:
+		pass
+elif os.path.exists("/proc/stb/info/gbmodel"):
+	BOX_NAME = "all"
+	try:
+		f = open("/proc/stb/info/gbmodel")
+		MODEL_NAME = f.read().strip()
+		f.close()
+	except:
+		pass
 
 class DevicesMountPanel(Screen, ConfigListScreen):
 	skin = """
@@ -144,7 +193,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				continue
 			device = parts[3]
 			mmc = False
-			if getBoxType() in ('vuuno4k', 'vuultimo4k', 'vusolo4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'gb7252', 'dags7252', 'vs1500') and search('mmcblk0p[1-9]',device):
+			if MODEL_NAME in ('sf5008','et13000','et1x000','uno4k', 'ultimo4k', 'solo4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gb7252', 'dags7252', 'vs1500','h7','8100s') and search('mmcblk0p[1-9]',device):
 				continue
 			if device and search('mmcblk[0-9]p[1-9]',device):
 				mmc = True
@@ -760,7 +809,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				continue
 			device = parts[3]
 			mmc = False
-			if getBoxType() in ('vuuno4k', 'vuultimo4k', 'vusolo4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'gb7252', 'dags7252', 'vs1500') and search('mmcblk0p[1-9]',device):
+			if MODEL_NAME in ('sf5008','et13000','et1x000','uno4k', 'ultimo4k', 'solo4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gb7252', 'dags7252', 'vs1500','h7','8100s') and search('mmcblk0p[1-9]',device):
 				continue
 			if device and search('mmcblk[0-9]p[1-9]',device):
 				mmc = True
