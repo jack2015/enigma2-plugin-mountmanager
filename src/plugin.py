@@ -25,7 +25,7 @@ from time import sleep
 from re import search
 import fstabViewer
 
-plugin_version = "2.4"
+plugin_version = "2.5"
 
 # Equivalent of the _IO('U', 20) constant in the linux kernel.
 USBDEVFS_RESET = ord('U') << (4*2) | 20 # same as USBDEVFS_RESET= 21780
@@ -740,7 +740,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.device_uuid not in l])
 			os.rename('/etc/fstab.tmp','/etc/fstab')
 			out = open('/etc/fstab', 'a')
-			line = self.device_uuid + '\t/media/hdd\tauto\tdefaults\t0 0\n'
+			line = self.device_uuid + '\t/media/hdd\tauto\tdefaults\t0  2\n'
 			if flashexpander is not None:
 				line += flashexpander
 			out.write(line)
@@ -1337,7 +1337,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.device_uuid not in l])
 			os.rename('/etc/fstab.tmp','/etc/fstab')
 			out = open('/etc/fstab', 'a')
-			line = self.device_uuid + '\t' + self.mountp + '\tauto\tdefaults\t0 0\n'
+			line = self.device_uuid + '\t' + self.mountp + '\tauto\tdefaults\t0  2\n'
 			if flashexpander is not None:
 				line += flashexpander
 			out.write(line)
