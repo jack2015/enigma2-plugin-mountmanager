@@ -42,7 +42,7 @@ except:
 
 BOX_NAME = "none"
 MODEL_NAME = "none"
-if os.path.exists("/proc/stb/info/boxtype"):
+if os.path.exists("/proc/stb/info/boxtype") and not os.path.exists("/proc/stb/info/hwmodel"):
 	BOX_NAME = "all"
 	try:
 		f = open("/proc/stb/info/boxtype")
@@ -193,7 +193,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				continue
 			device = parts[3]
 			mmc = False
-			if MODEL_NAME in ('sf5008', 'et13000', 'et11000',' et1x000', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gb7252', 'dags7252', 'vs1500','h7','8100s') and search('mmcblk0p[1-9]',device):
+			if MODEL_NAME in ('sf5008', 'et13000', 'et11000',' et1x000', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gb7252', 'lunix3-4k', 'vs1500', 'h7', '8100s') and search('mmcblk0p[1-9]',device):
 				continue
 			if device and search('mmcblk[0-9]p[1-9]',device):
 				mmc = True
@@ -809,7 +809,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				continue
 			device = parts[3]
 			mmc = False
-			if MODEL_NAME in ('sf5008', 'et13000', 'et11000', 'et1x000', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gb7252', 'dags7252', 'vs1500','h7','8100s') and search('mmcblk0p[1-9]',device):
+			if MODEL_NAME in ('sf5008', 'et13000', 'et11000', 'et1x000', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gb7252', 'lunix3-4k', 'vs1500', 'h7', '8100s') and search('mmcblk0p[1-9]',device):
 				continue
 			if device and search('mmcblk[0-9]p[1-9]',device):
 				mmc = True
