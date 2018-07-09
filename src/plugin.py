@@ -42,7 +42,7 @@ except:
 
 BOX_NAME = "none"
 MODEL_NAME = "none"
-if os.path.exists("/proc/stb/info/vumodel") and not os.path.exists("/proc/stb/info/boxtype") and not os.path.exists("/proc/stb/info/hwmodel"):
+if os.path.exists("/proc/stb/info/vumodel") and os.path.exists("/etc/init.d/vuplus-platform-util") and not os.path.exists("/proc/stb/info/boxtype") and not os.path.exists("/proc/stb/info/hwmodel"):
 	BOX_NAME = "vu"
 	try:
 		f = open("/proc/stb/info/vumodel")
