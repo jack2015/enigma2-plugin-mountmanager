@@ -25,7 +25,7 @@ from time import sleep
 from re import search
 import fstabViewer
 
-plugin_version = "2.5"
+plugin_version = "2.6"
 
 # Equivalent of the _IO('U', 20) constant in the linux kernel.
 USBDEVFS_RESET = ord('U') << (4*2) | 20 # same as USBDEVFS_RESET= 21780
@@ -42,6 +42,14 @@ except:
 
 BOX_NAME = "none"
 MODEL_NAME = "none"
+if os.path.exists("/proc/stb/info/vumodel") and not os.path.exists("/proc/stb/info/boxtype") and not os.path.exists("/proc/stb/info/hwmodel"):
+	BOX_NAME = "vu"
+	try:
+		f = open("/proc/stb/info/vumodel")
+		MODEL_NAME = f.read().strip()
+		f.close()
+	except:
+		pass
 if os.path.exists("/proc/stb/info/boxtype") and not os.path.exists("/proc/stb/info/hwmodel"):
 	BOX_NAME = "all"
 	try:
@@ -50,26 +58,18 @@ if os.path.exists("/proc/stb/info/boxtype") and not os.path.exists("/proc/stb/in
 		f.close()
 	except:
 		pass
+elif os.path.exists("/proc/stb/info/model") and not os.path.exists("/proc/stb/info/hwmodel"):
+	BOX_NAME = "dmm"
+	try:
+		f = open("/proc/stb/info/model")
+		MODEL_NAME = f.read().strip()
+		f.close()
+	except:
+		pass
 elif os.path.exists("/proc/stb/info/hwmodel"):
 	BOX_NAME = "all"
 	try:
 		f = open("/proc/stb/info/hwmodel")
-		MODEL_NAME = f.read().strip()
-		f.close()
-	except:
-		pass
-elif os.path.exists("/proc/stb/info/vumodel"):
-	BOX_NAME = "vu"
-	try:
-		f = open("/proc/stb/info/vumodel")
-		MODEL_NAME = f.read().strip()
-		f.close()
-	except:
-		pass
-elif device_name and device_name.startswith('dm') and os.path.exists("/proc/stb/info/model"):
-	BOX_NAME = "dmm"
-	try:
-		f = open("/proc/stb/info/model")
 		MODEL_NAME = f.read().strip()
 		f.close()
 	except:
