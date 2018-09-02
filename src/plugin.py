@@ -25,7 +25,7 @@ from time import sleep
 from re import search
 import fstabViewer
 
-plugin_version = "2.6"
+plugin_version = "2.7"
 
 # Equivalent of the _IO('U', 20) constant in the linux kernel.
 USBDEVFS_RESET = ord('U') << (4*2) | 20 # same as USBDEVFS_RESET= 21780
@@ -50,7 +50,7 @@ if os.path.exists("/proc/stb/info/vumodel") and os.path.exists("/etc/init.d/vupl
 		f.close()
 	except:
 		pass
-if os.path.exists("/proc/stb/info/boxtype") and not os.path.exists("/proc/stb/info/hwmodel"):
+elif os.path.exists("/proc/stb/info/boxtype") and not os.path.exists("/proc/stb/info/hwmodel"):
 	BOX_NAME = "all"
 	try:
 		f = open("/proc/stb/info/boxtype")
