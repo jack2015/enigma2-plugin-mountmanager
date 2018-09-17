@@ -1329,9 +1329,9 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 					f.close()
 				except:
 					pass
-			if self.mountp == '/media/hdd':
-					file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if '/media/hdd' not in l])
-					os.rename('/etc/fstab.tmp','/etc/fstab')
+			#if self.mountp == '/media/hdd':
+			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.mountp not in l])
+			os.rename('/etc/fstab.tmp','/etc/fstab')
 			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.device not in l])
 			os.rename('/etc/fstab.tmp','/etc/fstab')
 			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.device_uuid not in l])
