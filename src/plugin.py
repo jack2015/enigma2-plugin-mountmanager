@@ -13,7 +13,6 @@ from Components.config import getConfigListEntry, config, ConfigSelection, NoSav
 from Components.Sources.List import List
 from Components.Console import Console
 from Components.Sources.StaticText import StaticText
-from Tools.HardwareInfo import HardwareInfo
 from Screens.VirtualKeyBoard import VirtualKeyBoard
 from Plugins.Plugin import PluginDescriptor
 from Tools.LoadPixmap import LoadPixmap
@@ -25,7 +24,7 @@ from time import sleep
 from re import search
 import fstabViewer
 
-plugin_version = "2.7"
+plugin_version = "2.8"
 
 # Equivalent of the _IO('U', 20) constant in the linux kernel.
 USBDEVFS_RESET = ord('U') << (4*2) | 20 # same as USBDEVFS_RESET= 21780
@@ -34,11 +33,6 @@ update_usb_ids = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/upd
 make_exfat = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/make-exfat.sh"
 umountfs = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/umountfs.sh"
 device2 = ''
-
-try:
-	device_name = HardwareInfo().get_device_name()
-except:
-	device_name = None
 
 BOX_NAME = "none"
 MODEL_NAME = "none"
@@ -116,7 +110,8 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		self.setup_title = _("Mount Manager - edit label/fstab")
 		Screen.__init__(self, session)
 		self['key_red'] = Label(" ")
-		self['key_green'] = Label(_("Reset USB devices"))
+		#self['key_green'] = Label(_("Reset USB devices"))
+		self['key_green'] = Label()
 		self['key_yellow'] = Label(_("Unmount"))
 		self['key_blue'] = Label(_("Mount"))
 		self['key_menu'] = Label(_("Setup Mounts"))
@@ -441,15 +436,16 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 							self.list.append(res)
 
 	def openListUSBdevice(self):
-		if fileExists(EXT_LSUSB):
-			if not fileExists('/usr/share/usb.ids'):
-				self.session.open(MessageBox, _("'/usr/share/usb.ids' not found!\nPlease install package usbutils!"), MessageBox.TYPE_ERROR, timeout=5)
-			else:
-				self.Console = Console()
-				cmd = "%s > /tmp/ext_lsusb.tmp" % EXT_LSUSB
-				self.Console.ePopen(cmd, self.openListUSBdeviceAnswer, [])
-		else:
-			self.session.open(MessageBox, _("'%s' not found!") % EXT_LSUSB, MessageBox.TYPE_ERROR, timeout=5)
+		pass
+		#if fileExists(EXT_LSUSB):
+		#	if not fileExists('/usr/share/usb.ids'):
+		#		self.session.open(MessageBox, _("'/usr/share/usb.ids' not found!\nPlease install package usbutils!"), MessageBox.TYPE_ERROR, timeout=5)
+		#	else:
+		#		self.Console = Console()
+		#		cmd = "%s > /tmp/ext_lsusb.tmp" % EXT_LSUSB
+		#		self.Console.ePopen(cmd, self.openListUSBdeviceAnswer, [])
+		#else:
+		#	self.session.open(MessageBox, _("'%s' not found!") % EXT_LSUSB, MessageBox.TYPE_ERROR, timeout=5)
 
 	def openListUSBdeviceAnswer(self, result = None, retval = None, extra_args = None):
 		if result is None:
