@@ -36,7 +36,7 @@ device2 = ''
 
 BOX_NAME = "none"
 MODEL_NAME = "none"
-if os.path.exists("/proc/stb/info/vumodel") and not os.path.exists("/proc/stb/info/boxtype") and not os.path.exists("/proc/stb/info/hwmodel"):
+if os.path.exists("/proc/stb/info/vumodel") and not os.path.exists("/proc/stb/info/boxtype") and not os.path.exists("/proc/stb/info/hwmodel") and not os.path.exists("/proc/stb/info/gbmodel"):
 	BOX_NAME = "vu"
 	try:
 		f = open("/proc/stb/info/vumodel")
@@ -44,7 +44,7 @@ if os.path.exists("/proc/stb/info/vumodel") and not os.path.exists("/proc/stb/in
 		f.close()
 	except:
 		pass
-elif os.path.exists("/proc/stb/info/boxtype") and not os.path.exists("/proc/stb/info/hwmodel"):
+elif os.path.exists("/proc/stb/info/boxtype") and not os.path.exists("/proc/stb/info/hwmodel") and not os.path.exists("/proc/stb/info/gbmodel"):
 	BOX_NAME = "all"
 	try:
 		f = open("/proc/stb/info/boxtype")
@@ -52,7 +52,7 @@ elif os.path.exists("/proc/stb/info/boxtype") and not os.path.exists("/proc/stb/
 		f.close()
 	except:
 		pass
-elif os.path.exists("/proc/stb/info/model") and not os.path.exists("/proc/stb/info/hwmodel"):
+elif os.path.exists("/proc/stb/info/model") and not os.path.exists("/proc/stb/info/hwmodel") and not os.path.exists("/proc/stb/info/gbmodel"):
 	BOX_NAME = "dmm"
 	try:
 		f = open("/proc/stb/info/model")
@@ -68,7 +68,7 @@ elif os.path.exists("/proc/stb/info/hwmodel"):
 		f.close()
 	except:
 		pass
-elif os.path.exists("/proc/stb/info/gbmodel"):
+elif os.path.exists("/proc/stb/info/gbmodel") and not os.path.exists("/proc/stb/info/hwmodel"):
 	BOX_NAME = "all"
 	try:
 		f = open("/proc/stb/info/gbmodel")
@@ -188,7 +188,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				continue
 			device = parts[3]
 			mmc = False
-			if MODEL_NAME in ('sf5008', 'et13000', 'et11000',' et1x000', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'quad4k', 'ue4k', 'lunix3-4k', 'vs1500', 'h7', '8100s') and search('mmcblk0p[1-9]',device):
+			if MODEL_NAME in ('sf5008', 'et13000', 'et11000',' et1x000', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gbquad4k', 'gbue4k', 'lunix3-4k', 'lunix-4k', 'vs1500', 'h7', '8100s') and search('mmcblk0p[1-9]',device):
 				continue
 			if device and search('mmcblk[0-9]p[1-9]',device):
 				mmc = True
@@ -805,7 +805,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				continue
 			device = parts[3]
 			mmc = False
-			if MODEL_NAME in ('sf5008', 'et13000', 'et11000', 'et1x000', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'quad4k', 'ue4k', 'lunix3-4k', 'vs1500', 'h7', '8100s') and search('mmcblk0p[1-9]',device):
+			if MODEL_NAME in ('sf5008', 'et13000', 'et11000',' et1x000', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gbquad4k', 'gbue4k', 'lunix3-4k', 'lunix-4k', 'vs1500', 'h7', '8100s') and search('mmcblk0p[1-9]',device):
 				continue
 			if device and search('mmcblk[0-9]p[1-9]',device):
 				mmc = True
