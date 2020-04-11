@@ -1,6 +1,6 @@
 from . import _
 from Screens.Screen import Screen
-from enigma import eTimer
+from enigma import eTimer, getDesktop
 from Screens.MessageBox import MessageBox
 from Screens.Setup import SetupSummary
 from Screens.Standby import TryQuitMainloop
@@ -25,6 +25,11 @@ from re import search
 import fstabViewer
 
 plugin_version = "2.8"
+
+try:
+	screenWidth = getDesktop(0).size().width()
+except:
+	screenWidth = 720
 
 # Equivalent of the _IO('U', 20) constant in the linux kernel.
 USBDEVFS_RESET = ord('U') << (4*2) | 20 # same as USBDEVFS_RESET= 21780
@@ -78,33 +83,62 @@ elif os.path.exists("/proc/stb/info/gbmodel") and not os.path.exists("/proc/stb/
 		pass
 
 class DevicesMountPanel(Screen, ConfigListScreen):
-	skin = """
-	<screen position="center,center" size="680,462" title="Mount Manager">
-		<ePixmap pixmap="skin_default/buttons/red.png" position="40,0" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/green.png" position="190,0" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/yellow.png" position="340,0" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/blue.png" position="490,0" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/key_menu.png" position="10,435" size="35,25" alphatest="on" />
-		<widget name="key_red" position="40,0" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-		<widget name="key_green" position="190,0" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-		<widget name="key_yellow" position="340,0" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
-		<widget name="key_blue" position="490,0" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
-		<widget name="key_menu" position="50,435" zPosition="1" size="250,21" font="Regular;19" halign="center" valign="center" foregroundColor="#00ffc000" transparent="1" />
-		<widget source="list" render="Listbox" position="10,50" size="660,340" scrollbarMode="showOnDemand" >
-			<convert type="TemplatedMultiContent">
-				{"template": [
-				 MultiContentEntryText(pos = (90, 0), size = (480, 30), color = 0x0058bcff, color_sel = 0x00ffc000, font=0, text = 0),
-				 MultiContentEntryText(pos = (110, 30), size = (600, 50), font=1, flags = RT_VALIGN_TOP, text = 1),
-				  MultiContentEntryText(pos = (580, 0), size = (80, 18), font=2,color = 0x00999999, color_sel = 0x00999999, flags = RT_VALIGN_CENTER, text = 3),
-				 MultiContentEntryPixmapAlphaBlend(pos = (0, 0), size = (80, 80), png = 2),
-				],
-				"fonts": [gFont("Regular", 23),gFont("Regular", 19),gFont("Regular", 17)],
-				"itemHeight": 85
-				}
-			</convert>
-		</widget>
-		<widget name="lab1" zPosition="2" position="30,90" size="600,50" font="Regular;22" halign="center" transparent="1"/>
-	</screen>"""
+	if screenWidth >= 1920:
+		skin = """
+		<screen position="center,center" size="950,640" title="Mount Manager">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="60,0" size="225,45" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="285,0" size="225,45" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/yellow.png" position="510,0" size="225,45" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/blue.png" position="735,0" size="210,45" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/key_menu.png" position="410,610" size="42,30" alphatest="on" />
+			<widget name="key_red" position="85,0" zPosition="1" size="225,45" font="Regular;22" halign="left" valign="center" backgroundColor="#9f1313" transparent="1" />
+			<widget name="key_green" position="315,0" zPosition="1" size="225,45" font="Regular;22" halign="left" valign="center" backgroundColor="#1f771f" transparent="1" />
+			<widget name="key_yellow" position="555,0" zPosition="1" size="225,45" font="Regular;22" halign="left" valign="center" backgroundColor="#a08500" transparent="1" />
+			<widget name="key_blue" position="780,0" zPosition="1" size="210,45" font="Regular;22" halign="left" valign="center" backgroundColor="#18188b" transparent="1" />
+			<widget name="key_menu" position="450,606" zPosition="1" size="250,30" font="Regular;22" halign="left" valign="center" foregroundColor="#00ffc000" transparent="1" />
+			<widget source="list" render="Listbox" position="15,50" size="920,500" scrollbarMode="showOnDemand" >
+				<convert type="TemplatedMultiContent">
+					{"template": [
+					 MultiContentEntryText(pos = (90, 0), size = (480, 35), color = 0x0058bcff, color_sel = 0x00ffc000, font=0, text = 0),
+					 MultiContentEntryText(pos = (150, 30), size = (600, 60), font=1, flags = RT_VALIGN_TOP, text = 1),
+					 MultiContentEntryText(pos = (820, 0), size = (80, 25), font=2,color = 0x00999999, color_sel = 0x00999999, flags = RT_VALIGN_CENTER, text = 3),
+					 MultiContentEntryPixmapAlphaBlend(pos = (0, 0), size = (80, 80), png = 2),
+					],
+					"fonts": [gFont("Regular", 29),gFont("Regular", 25),gFont("Regular", 23)],
+					"itemHeight": 110
+					}
+				</convert>
+			</widget>
+			<widget name="lab1" zPosition="2" position="30,90" size="900,50" font="Regular;22" halign="center" transparent="1"/>
+		</screen>"""
+	else:
+		skin = """
+		<screen position="center,center" size="680,462" title="Mount Manager">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="40,0" size="140,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="190,0" size="140,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/yellow.png" position="340,0" size="140,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/blue.png" position="490,0" size="140,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/key_menu.png" position="10,435" size="35,25" alphatest="on" />
+			<widget name="key_red" position="40,0" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
+			<widget name="key_green" position="190,0" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
+			<widget name="key_yellow" position="340,0" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
+			<widget name="key_blue" position="490,0" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
+			<widget name="key_menu" position="50,435" zPosition="1" size="250,21" font="Regular;19" halign="center" valign="center" foregroundColor="#00ffc000" transparent="1" />
+			<widget source="list" render="Listbox" position="10,50" size="660,340" scrollbarMode="showOnDemand" >
+				<convert type="TemplatedMultiContent">
+					{"template": [
+					 MultiContentEntryText(pos = (90, 0), size = (480, 30), color = 0x0058bcff, color_sel = 0x00ffc000, font=0, text = 0),
+					 MultiContentEntryText(pos = (110, 30), size = (600, 50), font=1, flags = RT_VALIGN_TOP, text = 1),
+					  MultiContentEntryText(pos = (580, 0), size = (80, 18), font=2,color = 0x00999999, color_sel = 0x00999999, flags = RT_VALIGN_CENTER, text = 3),
+					 MultiContentEntryPixmapAlphaBlend(pos = (0, 0), size = (80, 80), png = 2),
+					],
+					"fonts": [gFont("Regular", 23),gFont("Regular", 19),gFont("Regular", 17)],
+					"itemHeight": 85
+					}
+				</convert>
+			</widget>
+			<widget name="lab1" zPosition="2" position="30,90" size="600,50" font="Regular;22" halign="center" transparent="1"/>
+		</screen>"""
 
 	def __init__(self, session):
 		self.setup_title = _("Mount Manager - edit label/fstab")
@@ -750,19 +784,34 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			self.updateList()
 
 class DeviceMountPanelConf(Screen, ConfigListScreen):
-	skin = """
-	<screen position="center,center" size="730,330" title="Setup Mounts">
-		<ePixmap pixmap="skin_default/buttons/red.png" position="15,0" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/green.png" position="165,0" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/yellow.png" position="315,0" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/blue.png" position="490,0" size="140,40" alphatest="on" />
-		<widget name="key_red" position="15,0" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-		<widget name="key_green" position="165,0" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-		<widget name="key_yellow" position="315,0" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
-		<widget name="key_blue" position="490,0" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
-		<widget name="config" position="0,60" size="730,215" scrollbarMode="showOnDemand"/>
-		<widget name="Linconn" position="30,305" size="680,25" font="Regular;18" halign="center" valign="center" backgroundColor="#9f1313"/>
-	</screen>"""
+	if screenWidth >= 1920:
+		skin = """
+		<screen position="center,center" size="940,500" title="Setup Mounts">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="20,0" size="225,45" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="245,0" size="225,45" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/yellow.png" position="470,0" size="225,45" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/blue.png" position="695,0" size="225,45" alphatest="on" />
+			<widget name="key_red" position="50,0" zPosition="1" size="225,45" font="Regular;21" halign="left" valign="center" backgroundColor="#9f1313" transparent="1" />
+			<widget name="key_green" position="285,0" zPosition="1" size="225,45" font="Regular;21" halign="left" valign="center" backgroundColor="#1f771f" transparent="1" />
+			<widget name="key_yellow" position="498,0" zPosition="1" size="225,45" font="Regular;21" halign="left" valign="center" backgroundColor="#a08500" transparent="1" />
+			<widget name="key_blue" position="720,0" zPosition="1" size="225,45" font="Regular;21" halign="left" valign="center" backgroundColor="#18188b" transparent="1" />
+			<widget name="config" position="0,60" size="940,350" font="Regular;25" scrollbarMode="showOnDemand"/>
+			<widget name="Linconn" position="30,465" size="880,30" font="Regular;21" halign="center" valign="center" backgroundColor="#9f1313"/>
+		</screen>"""
+	else:
+		skin = """
+		<screen position="center,center" size="730,330" title="Setup Mounts">
+			<ePixmap pixmap="skin_default/buttons/red.png" position="15,0" size="140,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/green.png" position="165,0" size="140,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/yellow.png" position="315,0" size="140,40" alphatest="on" />
+			<ePixmap pixmap="skin_default/buttons/blue.png" position="490,0" size="140,40" alphatest="on" />
+			<widget name="key_red" position="15,0" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
+			<widget name="key_green" position="165,0" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
+			<widget name="key_yellow" position="315,0" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
+			<widget name="key_blue" position="490,0" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
+			<widget name="config" position="0,60" size="730,215" scrollbarMode="showOnDemand"/>
+			<widget name="Linconn" position="30,305" size="680,25" font="Regular;18" halign="center" valign="center" backgroundColor="#9f1313"/>
+		</screen>"""
 
 	def __init__(self, session):
 		Screen.__init__(self, session)
