@@ -1,0 +1,420 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-02-28 20:05+0100\n"
+"PO-Revision-Date: 2020-03-15 21:05+0800\n"
+"Last-Translator: Dimitrij <Dima-73@inbox.lv>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"X-Generator: Poedit 2.2.3\n"
+"Language-Team: \n"
+
+msgid " as "
+msgstr " as "
+
+msgid " from "
+msgstr " from "
+
+msgid "%s points"
+msgstr "%s points"
+
+msgid "'%s' not found!"
+msgstr "'%s' 没有发现!"
+
+msgid ""
+"'/usr/share/usb.ids' not found!\n"
+"Please install package usbutils!"
+msgstr ""
+"'/usr/share/usb.ids' 没发现!\n"
+"请安装usbutils软件包!"
+
+msgid "Add entry"
+msgstr "添加条目"
+
+msgid "Add new entry"
+msgstr "添加新条目"
+
+msgid "All device umount.Select action:"
+msgstr "所有设备卸载。选择动作:"
+
+msgid ""
+"Attention!\n"
+"Not highly recommend that you remove or edit the system entry!\n"
+msgstr ""
+"注意！\n"
+"不强烈建议您删除或编辑系统条目！\n"
+
+msgid "Backup restored!"
+msgstr "备份已恢复!"
+
+msgid "Can't unmount partiton, make sure it is not being used for swap or record/timeshift paths!"
+msgstr "无法卸载分区，请确保它未用于交换或记录/时间偏移路径!"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid ""
+"Cannot unmount from the previous device from /media/hdd.\n"
+"A record in progress, timeshift or some external tools (like samba, nfsd,transmission and etc) may cause this "
+"problem.\n"
+"Please stop this actions/applications and try again!"
+msgstr ""
+"无法从/media/hdd中的上一个设备卸载。\n"
+"正在进行的记录、时间偏移或某些外部工具（如samba、nfsd、传输等）可能会导致此问题。\n"
+"请停止此操作/应用程序并重试!"
+
+msgid "Choose where to mount your devices in fstab to UUID:"
+msgstr "在fstab中选择将设备装载到UUID的位置:"
+
+msgid "Clone selected entry"
+msgstr "克隆选定项"
+
+msgid "Close plugin"
+msgstr "关闭插件"
+
+msgid ""
+"Device changes need a system restart to take effects.\n"
+"Restart your Box now?"
+msgstr ""
+"设备更改需要重新启动系统才能生效。\n"
+"现在重启你的接收机?"
+
+msgid "Device name:"
+msgstr "设备名称:"
+
+msgid "Device: "
+msgstr "设备: "
+
+msgid ""
+"Devices changes need a system restart to take effects.\n"
+"Restart your Box now?"
+msgstr ""
+"设备更改需要重新启动系统才能生效。\n"
+"现在重启你的接收机?"
+
+msgid "Dump frequency:"
+msgstr "转储频率:"
+
+msgid "Edit"
+msgstr "编辑"
+
+msgid "Edit fstab"
+msgstr "编辑fstab"
+
+msgid "Enter directory"
+msgstr "输入目录"
+
+msgid "Error in ioctl '%s'!"
+msgstr ""
+
+msgid "Error opening output file '%s'!"
+msgstr "打开输出文件时出错 '%s'!"
+
+msgid "Error response '%s'!"
+msgstr "错误响应 '%s'!"
+
+msgid ""
+"Error!\n"
+"The same mount point!"
+msgstr ""
+"出错!\n"
+"相同的装载点!"
+
+msgid "Exit"
+msgstr "退出"
+
+msgid "Failed to read /etc/fstab! Restore fstab.backup or edit the file manually."
+msgstr "无法读取/etc/fstab！还原fstab.backup或手动编辑文件."
+
+msgid "File system type:"
+msgstr "文件系统类型:"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "HARD DISK: "
+msgstr "硬盘: "
+
+msgid "Install / Info"
+msgstr "安装 / 信息"
+
+msgid "Label for device"
+msgstr "设备标签"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "Manage you devices mountpoints"
+msgstr "管理您的设备装载点"
+
+msgid "Mount"
+msgstr "装载"
+
+msgid "Mount Manager"
+msgstr "装载管理器"
+
+msgid "Mount Manager - edit label/fstab"
+msgstr "装载管理器 - 编辑标签/fstab"
+
+msgid "Mount all device from the fstab"
+msgstr "从fstab装载所有设备"
+
+msgid ""
+"Mount current device failed!\n"
+"Maybe this device is not spelled out in the fstab?"
+msgstr ""
+"安装电流设备失败！\n"
+"也许这个设备没有在fstab中说明?"
+
+msgid "Mount current device from the fstab"
+msgstr "从fstab装载当前设备"
+
+msgid "Mount current device to %s"
+msgstr "装载当前设备到 %s"
+
+msgid "Mount failed!"
+msgstr "装载失败!"
+
+msgid "Mount point:"
+msgstr "装载点:"
+
+msgid "Mount: "
+msgstr "装载: "
+
+msgid "None"
+msgstr "None"
+
+msgid "Not found /etc/fstab.backup!"
+msgstr "没有发现 /etc/fstab.backup!"
+
+msgid "Not found restore file!"
+msgstr "找不到还原文件!"
+
+msgid "Open editor"
+msgstr "打开编辑器"
+
+msgid "Open selector"
+msgstr "打开选择器"
+
+msgid "Options:"
+msgstr "选项:"
+
+msgid "Pass num value 1 use only for root filesystem (mountpoint '/')!"
+msgstr "数字1仅用作根文件系统（装载点\"/\"）"
+
+msgid "Pass number:"
+msgstr "通行证号码:"
+
+msgid "Please enter a value for every input field!"
+msgstr "请为每个输入字段输入一个值!"
+
+msgid "Please enter label for %s:"
+msgstr "请输入%s的标签:"
+
+msgid "Please install tune2fs"
+msgstr "请安装 tune2fs"
+
+msgid "Please wait..."
+msgstr "请等待..."
+
+msgid "Really delete the selected entry?"
+msgstr "确实要删除所选条目?"
+
+msgid "Really edit the selected entry?"
+msgstr "确实要编辑所选条目?"
+
+msgid "Really save in fstab mount by UUID:\n"
+msgstr "按UUID真正保存在fstab mount中:\n"
+
+msgid "Really unmount "
+msgstr "真的卸载 "
+
+msgid "Really use and mount %s as HDD ?"
+msgstr "真的要使用并装载%s作为硬盘吗?"
+
+msgid "Remove entry"
+msgstr "删除条目"
+
+msgid "Reset USB devices"
+msgstr "重置USB设备"
+
+msgid "Reset successful '%s'!"
+msgstr "重置成功 '%s'!"
+
+msgid "Restart Box..."
+msgstr "重启接收机..."
+
+msgid "Restart your box"
+msgstr "重启接收机"
+
+msgid "Restore backup fstab"
+msgstr "还原备份fstab"
+
+msgid "Restore default fstab"
+msgstr "还原默认fstab"
+
+msgid "Restore fstab"
+msgstr "还原fstab"
+
+msgid "Restore fstab.backup"
+msgstr "还原 fstab.backup"
+
+msgid "Return with saving"
+msgstr "保存并返回"
+
+msgid "Return without saving"
+msgstr "不保存并返回"
+
+msgid "Run mount -a"
+msgstr ""
+
+msgid "Save mount in fstab"
+msgstr "在fstab中保存"
+
+msgid "Select action:"
+msgstr "选择操作:"
+
+msgid "Select device for reset:"
+msgstr "选择要重置的设备:"
+
+msgid "Select mount action for %s:"
+msgstr ""
+
+msgid "Select system info or install module:"
+msgstr "选择系统信息或安装模块:"
+
+msgid "Setup Mounts"
+msgstr ""
+
+msgid "Size: "
+msgstr "容量: "
+
+msgid "TB"
+msgstr ""
+
+msgid "The device is already mounted!"
+msgstr "该设备已经装载了!"
+
+msgid "This Device is already mounted as HDD."
+msgstr "此设备已作为HDD装载."
+
+msgid "This entry already exists in the fstab!"
+msgstr "此条目已存在于fstab中！"
+
+msgid "Type: "
+msgstr "型号: "
+
+msgid "Unmount"
+msgstr "卸载"
+
+msgid "Use as HDD"
+msgstr "用作硬盘"
+
+msgid "Wait please while scanning for devices..."
+msgstr "正在扫描设备，请稍候..."
+
+msgid "Wait please while scanning your box devices..."
+msgstr "正在扫描接收机设备，请稍候..."
+
+msgid "Warning, this device is used for more than one mount point!\n"
+msgstr "警告，此设备用于了多个装载点！\n"
+
+msgid "auto"
+msgstr "自动"
+
+msgid "device name: "
+msgstr "设备名称: "
+
+msgid "dump (0 - create backup off): "
+msgstr ""
+
+msgid "file system type (auto): "
+msgstr "文件系统类型（自动）: "
+
+msgid "fstab restored!"
+msgstr ""
+
+msgid "fstab-Editor"
+msgstr "fstab - 编辑器"
+
+msgid "install ext2 kernel module"
+msgstr ""
+
+msgid "install ext3 kernel module"
+msgstr ""
+
+msgid "install filesystem utilities (e2fsprogs)"
+msgstr ""
+
+msgid "install filesystem utilities (e2fsprogs-tune2fs)"
+msgstr ""
+
+msgid "install linux utilities (fdisk)"
+msgstr ""
+
+msgid "install linux utilities (util-linux-blkid)"
+msgstr ""
+
+msgid "mount point: "
+msgstr ""
+
+msgid "options mount file system (defaults): "
+msgstr ""
+
+msgid "pass num (0 - fsck off): "
+msgstr ""
+
+msgid "select:"
+msgstr "选择:"
+
+msgid "unavailable"
+msgstr "不可用的"
+
+msgid "eject DVD"
+msgstr ""
+
+msgid "update usb.ids (www.linux-usb.org)"
+msgstr ""
+
+msgid "install linux utilities (hdparm)"
+msgstr ""
+
+msgid "install filesystem utilities (fuse-exfat)"
+msgstr ""
+
+msgid "install filesystem utilities (ntfs-3g)"
+msgstr ""
+
+msgid "install linux utilities (parted)"
+msgstr ""
+
+msgid "install linux utilities (smartmontools)"
+msgstr ""
+
+msgid "Press OK..."
+msgstr "点击OK..."
+
+msgid "Set discard mount option"
+msgstr "设置discard装载选项"
+
+msgid "Unset discard mount option"
+msgstr "取消设置discard装载选项"
+
+msgid "Show discard status"
+msgstr "显示discard状态"
+
+msgid ""
+"TRIM (if supported) working only for SSD device.\n"
+"Requires filesystem ext4 and flag discard."
+msgstr ""
+"TRIM（如果支持）仅适用于SSD设备。\n"
+"需要文件系统ext4和标志discard."
+
+msgid "*****Spin down HDD*****"
+msgstr ""
+
+msgid "Spin down HDD before shutdown box"
+msgstr ""
