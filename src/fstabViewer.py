@@ -144,7 +144,7 @@ class fstabViewerScreen(Screen, HelpableScreen):
 				if line[0] != "\n" and line[0] != "#":
 					try:
 						entry = line.split()
-						if entry in entryList: 
+						if entry in entryList:
 							continue
 						entryList.append(entry)
 						if len(entry[0]) > lengthList[0]:
@@ -198,7 +198,7 @@ class fstabViewerScreen(Screen, HelpableScreen):
 
 	def addEntry(self):
 		if not self.builderror:
-			menu = [(_("Add new entry"), "new")] 
+			menu = [(_("Add new entry"), "new")]
 			selectedEntry = self["menulist"].getSelectedIndex()
 			if selectedEntry and not self.checkSoftwareEntry(entryList[selectedEntry][0]):
 				menu.append((_("Clone selected entry"), "clone"))
