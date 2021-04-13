@@ -500,7 +500,8 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		self.session.openWithCallback(self.updateList, DeviceMountPanelConf)
 
 	def Mount(self):
-		if len(self['list'].list) < 1: return
+		if len(self['list'].list) < 1:
+			return
 		sel = self['list'].getCurrent()
 		if sel:
 			des = sel[1]
@@ -554,7 +555,8 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			self.Console.ePopen("/sbin/blkid | grep " + self.device, self.cur_in_fstab, [self.device, self.mountp])
 
 	def MountCur1(self):
-		if len(self['list'].list) < 1: return
+		if len(self['list'].list) < 1:
+			return
 		system('mount -a')
 		self.updateList()
 
@@ -616,7 +618,8 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		self.updateList()
 
 	def Unmount(self):
-		if len(self['list'].list) < 1: return
+		if len(self['list'].list) < 1:
+			return
 		sel = self['list'].getCurrent()
 		if sel:
 			des = sel[1]
@@ -625,7 +628,8 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			mountp = parts[1].replace(_("Mount: "), '')
 			device = parts[2].replace(_("Device: "), '')
 			print mountp
-			if mountp == _("None"): return
+			if mountp == _("None"):
+				return
 			message = _('Really unmount ') + device + _(" from ") +  mountp + " ?"
 			self.session.openWithCallback(self.UnmountAnswer, MessageBox, message, MessageBox.TYPE_YESNO)
 
@@ -662,7 +666,8 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				self.updateList()
 
 	def saveMypoints(self):
-		if len(self['list'].list) < 1: return
+		if len(self['list'].list) < 1:
+			return
 		sel = self['list'].getCurrent()
 		if sel:
 			des = sel[1]
@@ -1230,7 +1235,8 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 		return False
 
 	def saveMypoints(self):
-		if len(self['config'].list) < 1: return
+		if len(self['config'].list) < 1:
+			return
 		message = _("Really save in fstab mount by UUID:\n")
 		val = []
 		for x in self['config'].list:
