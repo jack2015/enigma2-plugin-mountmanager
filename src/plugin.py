@@ -27,7 +27,7 @@ import fstabViewer
 plugin_version = "2.8"
 
 # Equivalent of the _IO('U', 20) constant in the linux kernel.
-USBDEVFS_RESET = ord('U') << (4*2) | 20 # same as USBDEVFS_RESET= 21780
+USBDEVFS_RESET = ord('U') << (4 * 2) | 20 # same as USBDEVFS_RESET= 21780
 EXT_LSUSB = "/usr/bin/lsusb"
 update_usb_ids = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/update-usbids.sh"
 make_exfat = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/make-exfat.sh"
@@ -182,7 +182,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			self.selectionChanged()
 			return
 		for line in f.readlines():
-			mount_list =[]
+			mount_list = []
 			parts = line.strip().split()
 			if not parts:
 				continue
@@ -630,7 +630,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			print mountp
 			if mountp == _("None"):
 				return
-			message = _('Really unmount ') + device + _(" from ") +  mountp + " ?"
+			message = _('Really unmount ') + device + _(" from ") + mountp + " ?"
 			self.session.openWithCallback(self.UnmountAnswer, MessageBox, message, MessageBox.TYPE_YESNO)
 
 	def UnmountAnswer(self, answer):
@@ -1247,7 +1247,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			else:
 				self.session.open(MessageBox, _("Error!\nThe same mount point!"), MessageBox.TYPE_ERROR, timeout=5)
 				return
-			message += '/dev/' + device + _(" as ") +  mountp + "\n"
+			message += '/dev/' + device + _(" as ") + mountp + "\n"
 		self.session.openWithCallback(self.saveMypointsAnswer, MessageBox, message, MessageBox.TYPE_YESNO)
 
 	def saveMypointsAnswer(self, answer):
