@@ -33,10 +33,10 @@ class fstabMenuList(MenuList):
 			self.l.setItemHeight(220)
 
 def fstabMenuListEntry(devicename, mountpoint, fstype, options, dumpfreq, passnum):
-	res = [ (devicename, mountpoint,fstype, options, dumpfreq, passnum) ]
+	res = [(devicename, mountpoint,fstype, options, dumpfreq, passnum)]
 	# skin.xml <parameter name="fstabMenuList" value="0,30,600,50,700,30,500,50" />
 	try:
-		x, y, w, h , x1, y1, w1, h1 = skin.parameters.get("fstabMenuList",(0, 0, 200, 25, 230, 0, 370, 25))
+		x, y, w, h, x1, y1, w1, h1 = skin.parameters.get("fstabMenuList",(0, 0, 200, 25, 230, 0, 370, 25))
 	except:
 		x = 0
 		y = 0
@@ -134,7 +134,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 		entryList = []
 		lengthList = [0,0,0,0]
 		if fileExists("/etc/fstab"):
-			fstabFile = open("/etc/fstab" ,"r")
+			fstabFile = open("/etc/fstab","r")
 			global entryList, lenghtList
 			self.counter = 0
 			for line in fstabFile:
