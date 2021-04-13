@@ -77,6 +77,7 @@ elif os.path.exists("/proc/stb/info/gbmodel") and not os.path.exists("/proc/stb/
 	except:
 		pass
 
+
 class DevicesMountPanel(Screen, ConfigListScreen):
 	skin = """
 	<screen position="center,center" size="680,462" title="Mount Manager">
@@ -754,6 +755,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		else:
 			self.updateList()
 
+
 class DeviceMountPanelConf(Screen, ConfigListScreen):
 	skin = """
 	<screen position="center,center" size="730,330" title="Setup Mounts">
@@ -1351,6 +1353,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 		else:
 			self.close()
 
+
 class DevicesMountPanelSummary(SetupSummary):
 	def __init__(self, session, parent):
 		SetupSummary.__init__(self, session, parent=parent)
@@ -1367,14 +1370,17 @@ class DevicesMountPanelSummary(SetupSummary):
 		self["SetupEntry"].text = name
 		self["SetupValue"].text = desc
 
+
 def StartSetup(menuid, **kwargs):
 	if menuid == "system":
 		return [(_("Mount Manager"), OpenSetup, "mountpoints_setup", None)]
 	else:
 		return []
 
+
 def OpenSetup(session, **kwargs):
 	session.open(DevicesMountPanel)
+
 
 def Plugins(**kwargs):
 	return [PluginDescriptor(name="Mount Manager", description=_("Manage you devices mountpoints"), where=PluginDescriptor.WHERE_MENU, fnc=StartSetup)]

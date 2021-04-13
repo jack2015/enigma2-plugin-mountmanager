@@ -20,6 +20,7 @@ import skin
 entryList = []
 lengthList = [0, 0, 0, 0]
 
+
 class fstabMenuList(MenuList):
 	def __init__(self, list):
 		MenuList.__init__(self, list, True, eListboxPythonMultiContent)
@@ -31,6 +32,7 @@ class fstabMenuList(MenuList):
 		except:
 			self.l.setFont(0, gFont("Regular", 20))
 			self.l.setItemHeight(220)
+
 
 def fstabMenuListEntry(devicename, mountpoint, fstype, options, dumpfreq, passnum):
 	res = [(devicename, mountpoint, fstype, options, dumpfreq, passnum)]
@@ -60,6 +62,7 @@ def fstabMenuListEntry(devicename, mountpoint, fstype, options, dumpfreq, passnu
 	res.append(MultiContentEntryText(pos=(x1, 180 + y1), size=(w1, h1), font=0, text=passnum))
 
 	return res
+
 
 class fstabViewerScreen(Screen, HelpableScreen):
 	skin = """
@@ -242,6 +245,7 @@ class fstabViewerScreen(Screen, HelpableScreen):
 			self.session.openWithCallback(setAction, ChoiceBox, title=_("Select action:"), list=list)
 		else:
 			self.session.open(MessageBox, _("Not found restore file!"), MessageBox.TYPE_ERROR, timeout=5)
+
 
 class fstabEditorScreen(Screen, ConfigListScreen, HelpableScreen):
 	skin = """
