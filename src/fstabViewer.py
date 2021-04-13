@@ -46,12 +46,12 @@ def fstabMenuListEntry(devicename, mountpoint, fstype, options, dumpfreq, passnu
 		y1 = 0
 		w1 = 370
 		h1 = 25
-	res.append(MultiContentEntryText(pos=(x,30+y),size=(w,h), font=0, flags=RT_HALIGN_RIGHT, text= _("Device name:")))
-	res.append(MultiContentEntryText(pos=(x,60+y),size=(w,h), font=0, flags=RT_HALIGN_RIGHT, text= _("Mount point:")))
-	res.append(MultiContentEntryText(pos=(x,90+y),size=(w,h), font=0, flags=RT_HALIGN_RIGHT, text= _("File system type:")))
-	res.append(MultiContentEntryText(pos=(x,120+y),size=(w,h), font=0, flags=RT_HALIGN_RIGHT, text= _("Options:")))
-	res.append(MultiContentEntryText(pos=(x,150+y),size=(w,h), font=0, flags=RT_HALIGN_RIGHT, text= _("Dump frequency:")))
-	res.append(MultiContentEntryText(pos=(x,180+y),size=(w,h), font=0, flags=RT_HALIGN_RIGHT, text= _("Pass number:")))
+	res.append(MultiContentEntryText(pos=(x,30+y),size=(w,h), font=0, flags=RT_HALIGN_RIGHT, text=_("Device name:")))
+	res.append(MultiContentEntryText(pos=(x,60+y),size=(w,h), font=0, flags=RT_HALIGN_RIGHT, text=_("Mount point:")))
+	res.append(MultiContentEntryText(pos=(x,90+y),size=(w,h), font=0, flags=RT_HALIGN_RIGHT, text=_("File system type:")))
+	res.append(MultiContentEntryText(pos=(x,120+y),size=(w,h), font=0, flags=RT_HALIGN_RIGHT, text=_("Options:")))
+	res.append(MultiContentEntryText(pos=(x,150+y),size=(w,h), font=0, flags=RT_HALIGN_RIGHT, text=_("Dump frequency:")))
+	res.append(MultiContentEntryText(pos=(x,180+y),size=(w,h), font=0, flags=RT_HALIGN_RIGHT, text=_("Pass number:")))
 	res.append(MultiContentEntryText(pos=(x1,30+y1),size=(w1,h1), font=0, text=devicename))
 	res.append(MultiContentEntryText(pos=(x1,60+y1),size=(w1,h1), font=0, text=mountpoint))
 	res.append(MultiContentEntryText(pos=(x1,90+y1),size=(w1,h1), font=0, text=fstype))
@@ -79,7 +79,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 			<widget name="restore" font="Regular;18" position="265,401" size="320,20" transparent="1"/>
 		</screen>"""
 
-	def __init__(self, session, args = 0):
+	def __init__(self, session, args=0):
 		self.skin = fstabViewerScreen.skin
 		self.session = session
 		Screen.__init__(self, session)
@@ -208,7 +208,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 							self.addNewEntry()
 						elif choice[1] == "clone":
 							self.cloneEntry()
-				self.session.openWithCallback(setAction, ChoiceBox, title= _("Select action:"), list=menu)
+				self.session.openWithCallback(setAction, ChoiceBox, title=_("Select action:"), list=menu)
 
 	def cloneEntry(self):
 		if not self.builderror:
@@ -239,7 +239,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 					self.session.open(MessageBox, _("fstab restored!"), MessageBox.TYPE_INFO, timeout=5)
 					self.builderror = False
 					self.buildScreen()
-			self.session.openWithCallback(setAction, ChoiceBox, title= _("Select action:"), list=list)
+			self.session.openWithCallback(setAction, ChoiceBox, title=_("Select action:"), list=list)
 		else:
 			self.session.open(MessageBox, _("Not found restore file!"), MessageBox.TYPE_ERROR, timeout=5)
 
@@ -303,19 +303,19 @@ class fstabEditorScreen(Screen, ConfigListScreen, HelpableScreen):
 		self["HelpWindow"] = Pixmap()
 		self["HelpWindow"].hide()
 		if 	self.addEntry:
-			self.devicename = NoSave(ConfigText(default = "", fixed_size = False))
-			self.mountpoint = NoSave(ConfigText(default = "", fixed_size = False))
-			self.fstype = NoSave(ConfigSelection([("auto", "auto"),("ext2", "ext2"),("ext3", "ext3"),("ext4", "ext4"),("cifs","cifs"),("nfs", "nfs"),("swap", "swap"),("btrfs", "btrfs"),("ntfs-3g", "ntfs-3g"),("vfat", "vfat"),("fat", "fat"),("ntfs", "ntfs"),("udf", "udf"),("iso9660", "iso9660"),("cdfs", "cdfs"),("exfat", "exfat")], default = "auto"))
-			self.options = NoSave(ConfigText(default = "defaults", fixed_size = False))
+			self.devicename = NoSave(ConfigText(default="", fixed_size=False))
+			self.mountpoint = NoSave(ConfigText(default="", fixed_size=False))
+			self.fstype = NoSave(ConfigSelection([("auto", "auto"),("ext2", "ext2"),("ext3", "ext3"),("ext4", "ext4"),("cifs","cifs"),("nfs", "nfs"),("swap", "swap"),("btrfs", "btrfs"),("ntfs-3g", "ntfs-3g"),("vfat", "vfat"),("fat", "fat"),("ntfs", "ntfs"),("udf", "udf"),("iso9660", "iso9660"),("cdfs", "cdfs"),("exfat", "exfat")], default="auto"))
+			self.options = NoSave(ConfigText(default="defaults", fixed_size=False))
 			self.dumpfreq = NoSave(ConfigInteger(limits=(0, 1), default=0))
-			self.passnum = NoSave(ConfigSelection([("0","0"),("1","1"),("2","2")], default = "0"))
+			self.passnum = NoSave(ConfigSelection([("0","0"),("1","1"),("2","2")], default="0"))
 		else:
-			self.devicename = NoSave(ConfigText(fixed_size = False, default = entryList[self.selectedEntry][0]))
-			self.mountpoint = NoSave(ConfigText(fixed_size = False, default = entryList[self.selectedEntry][1]))
-			self.fstype = NoSave(ConfigSelection([("auto", "auto"),("ext2", "ext2"),("ext3", "ext3"),("ext4", "ext4"),("cifs", "cifs"),("nfs", "nfs"),("swap", "swap"),("btrfs", "btrfs"),("ntfs-3g", "ntfs-3g"),("vfat", "vfat"),("fat", "fat"),("ntfs", "ntfs"),("udf", "udf"),("iso9660", "iso9660"),("cdfs", "cdfs"),("exfat", "exfat")], default = entryList[self.selectedEntry][2]))
-			self.options = NoSave(ConfigText(fixed_size = False, default = entryList[self.selectedEntry][3]))
-			self.dumpfreq = NoSave(ConfigInteger(limits=(0, 1), default = int(entryList[self.selectedEntry][4])))
-			self.passnum = NoSave(ConfigSelection([("0","0"),("1","1"),("2","2")], default = entryList[self.selectedEntry][5]))
+			self.devicename = NoSave(ConfigText(fixed_size=False, default=entryList[self.selectedEntry][0]))
+			self.mountpoint = NoSave(ConfigText(fixed_size=False, default=entryList[self.selectedEntry][1]))
+			self.fstype = NoSave(ConfigSelection([("auto", "auto"),("ext2", "ext2"),("ext3", "ext3"),("ext4", "ext4"),("cifs", "cifs"),("nfs", "nfs"),("swap", "swap"),("btrfs", "btrfs"),("ntfs-3g", "ntfs-3g"),("vfat", "vfat"),("fat", "fat"),("ntfs", "ntfs"),("udf", "udf"),("iso9660", "iso9660"),("cdfs", "cdfs"),("exfat", "exfat")], default=entryList[self.selectedEntry][2]))
+			self.options = NoSave(ConfigText(fixed_size=False, default=entryList[self.selectedEntry][3]))
+			self.dumpfreq = NoSave(ConfigInteger(limits=(0, 1), default=int(entryList[self.selectedEntry][4])))
+			self.passnum = NoSave(ConfigSelection([("0","0"),("1","1"),("2","2")], default=entryList[self.selectedEntry][5]))
 
 		self.list.append(getConfigListEntry(_("device name: "), self.devicename))
 		self.list.append(getConfigListEntry(_("mount point: "), self.mountpoint))
