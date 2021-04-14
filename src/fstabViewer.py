@@ -18,7 +18,8 @@ import os
 import skin
 
 entryList = []
-lengthList = [0,0,0,0]
+lengthList = [0, 0, 0, 0]
+
 
 class fstabMenuList(MenuList):
 	def __init__(self, list):
@@ -32,11 +33,12 @@ class fstabMenuList(MenuList):
 			self.l.setFont(0, gFont("Regular", 20))
 			self.l.setItemHeight(220)
 
+
 def fstabMenuListEntry(devicename, mountpoint, fstype, options, dumpfreq, passnum):
-	res = [ (devicename, mountpoint,fstype, options, dumpfreq, passnum) ]
+	res = [(devicename, mountpoint, fstype, options, dumpfreq, passnum)]
 	# skin.xml <parameter name="fstabMenuList" value="0,30,600,50,700,30,500,50" />
 	try:
-		x, y, w, h , x1, y1, w1, h1 = skin.parameters.get("fstabMenuList",(0, 0, 200, 25, 230, 0, 370, 25))
+		x, y, w, h, x1, y1, w1, h1 = skin.parameters.get("fstabMenuList", (0, 0, 200, 25, 230, 0, 370, 25))
 	except:
 		x = 0
 		y = 0
@@ -46,22 +48,23 @@ def fstabMenuListEntry(devicename, mountpoint, fstype, options, dumpfreq, passnu
 		y1 = 0
 		w1 = 370
 		h1 = 25
-	res.append(MultiContentEntryText(pos=(x,30+y),size=(w,h), font=0, flags=RT_HALIGN_RIGHT, text= _("Device name:")))
-	res.append(MultiContentEntryText(pos=(x,60+y),size=(w,h), font=0, flags=RT_HALIGN_RIGHT, text= _("Mount point:")))
-	res.append(MultiContentEntryText(pos=(x,90+y),size=(w,h), font=0, flags=RT_HALIGN_RIGHT, text= _("File system type:")))
-	res.append(MultiContentEntryText(pos=(x,120+y),size=(w,h), font=0, flags=RT_HALIGN_RIGHT, text= _("Options:")))
-	res.append(MultiContentEntryText(pos=(x,150+y),size=(w,h), font=0, flags=RT_HALIGN_RIGHT, text= _("Dump frequency:")))
-	res.append(MultiContentEntryText(pos=(x,180+y),size=(w,h), font=0, flags=RT_HALIGN_RIGHT, text= _("Pass number:")))
-	res.append(MultiContentEntryText(pos=(x1,30+y1),size=(w1,h1), font=0, text=devicename))
-	res.append(MultiContentEntryText(pos=(x1,60+y1),size=(w1,h1), font=0, text=mountpoint))
-	res.append(MultiContentEntryText(pos=(x1,90+y1),size=(w1,h1), font=0, text=fstype))
-	res.append(MultiContentEntryText(pos=(x1,120+y1),size=(w1,h1), font=0, text=options))
-	res.append(MultiContentEntryText(pos=(x1,150+y1),size=(w1,h1), font=0, text=dumpfreq))
-	res.append(MultiContentEntryText(pos=(x1,180+y1),size=(w1,h1), font=0, text=passnum))
+	res.append(MultiContentEntryText(pos=(x, 30 + y), size=(w, h), font=0, flags=RT_HALIGN_RIGHT, text=_("Device name:")))
+	res.append(MultiContentEntryText(pos=(x, 60 + y), size=(w, h), font=0, flags=RT_HALIGN_RIGHT, text=_("Mount point:")))
+	res.append(MultiContentEntryText(pos=(x, 90 + y), size=(w, h), font=0, flags=RT_HALIGN_RIGHT, text=_("File system type:")))
+	res.append(MultiContentEntryText(pos=(x, 120 + y), size=(w, h), font=0, flags=RT_HALIGN_RIGHT, text=_("Options:")))
+	res.append(MultiContentEntryText(pos=(x, 150 + y), size=(w, h), font=0, flags=RT_HALIGN_RIGHT, text=_("Dump frequency:")))
+	res.append(MultiContentEntryText(pos=(x, 180 + y), size=(w, h), font=0, flags=RT_HALIGN_RIGHT, text=_("Pass number:")))
+	res.append(MultiContentEntryText(pos=(x1, 30 + y1), size=(w1, h1), font=0, text=devicename))
+	res.append(MultiContentEntryText(pos=(x1, 60 + y1), size=(w1, h1), font=0, text=mountpoint))
+	res.append(MultiContentEntryText(pos=(x1, 90 + y1), size=(w1, h1), font=0, text=fstype))
+	res.append(MultiContentEntryText(pos=(x1, 120 + y1), size=(w1, h1), font=0, text=options))
+	res.append(MultiContentEntryText(pos=(x1, 150 + y1), size=(w1, h1), font=0, text=dumpfreq))
+	res.append(MultiContentEntryText(pos=(x1, 180 + y1), size=(w1, h1), font=0, text=passnum))
 
 	return res
 
-class fstabViewerScreen(Screen,HelpableScreen):
+
+class fstabViewerScreen(Screen, HelpableScreen):
 	skin = """
 		<screen position="center,center" size="600,430" title="fstab-Editor" >
 			<widget name="entryinfo" position="0,10" size="580,20" halign="right" font="Regular;17" transparent="1" />
@@ -79,7 +82,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 			<widget name="restore" font="Regular;18" position="265,401" size="320,20" transparent="1"/>
 		</screen>"""
 
-	def __init__(self, session, args = 0):
+	def __init__(self, session, args=0):
 		self.skin = fstabViewerScreen.skin
 		self.session = session
 		Screen.__init__(self, session)
@@ -98,8 +101,8 @@ class fstabViewerScreen(Screen,HelpableScreen):
 		{
 			"green": (self.addEntry, _("Add entry")),
 			"yellow": (self.restoreBackUp, _("Restore backup fstab")),
-			"blue":	(self.mountall, _("Run mount -a")),
-			"red":	(self.close, _("Close plugin")),
+			"blue": (self.mountall, _("Run mount -a")),
+			"red": (self.close, _("Close plugin")),
 		}, -1)
 
 		self["OkCancelActions"] = HelpableActionMap(self, "OkCancelActions",
@@ -132,16 +135,16 @@ class fstabViewerScreen(Screen,HelpableScreen):
 	def buildScreen(self):
 		self.fstabEntryList = []
 		entryList = []
-		lengthList = [0,0,0,0]
+		lengthList = [0, 0, 0, 0]
 		if fileExists("/etc/fstab"):
-			fstabFile = open("/etc/fstab" ,"r")
+			fstabFile = open("/etc/fstab", "r")
 			global entryList, lenghtList
 			self.counter = 0
 			for line in fstabFile:
 				if line[0] != "\n" and line[0] != "#":
 					try:
 						entry = line.split()
-						if entry in entryList: 
+						if entry in entryList:
 							continue
 						entryList.append(entry)
 						if len(entry[0]) > lengthList[0]:
@@ -152,8 +155,8 @@ class fstabViewerScreen(Screen,HelpableScreen):
 							lengthList[2] = len(entry[2])
 						if len(entry[3]) > lengthList[3]:
 							lengthList[3] = len(entry[3])
-						self.fstabEntryList.append(fstabMenuListEntry(entry[0],entry[1],entry[2],entry[3],entry[4],entry[5]))
-						self.counter = self.counter+1
+						self.fstabEntryList.append(fstabMenuListEntry(entry[0], entry[1], entry[2], entry[3], entry[4], entry[5]))
+						self.counter = self.counter + 1
 					except:
 						fstabFile.close()
 						self.fstabEntryList = []
@@ -164,7 +167,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 						return -1
 			fstabFile.close()
 		self["menulist"].l.setList(self.fstabEntryList)
-		self["entryinfo"].setText("%d / %d" %(self["menulist"].getSelectedIndex()+1, self.counter))
+		self["entryinfo"].setText("%d / %d" % (self["menulist"].getSelectedIndex() + 1, self.counter))
 
 	def writeFile(self, returnvalue):
 		if returnvalue != 0 and not self.builderror:
@@ -172,7 +175,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 			configFile = open('/etc/fstab', 'w')
 			for i in range(len(entryList)):
 				try:
-					line = "%*s %*s %*s %*s %s %s\n" %(int(lengthList[0])*-1, entryList[i][0], int(lengthList[1])*-1, entryList[i][1], int(lengthList[2])*-1, entryList[i][2], int(lengthList[3])*-1, entryList[i][3],str(entryList[i][4]), str(entryList[i][5]))
+					line = "%*s %*s %*s %*s %s %s\n" % (int(lengthList[0]) * -1, entryList[i][0], int(lengthList[1]) * -1, entryList[i][1], int(lengthList[2]) * -1, entryList[i][2], int(lengthList[3]) * -1, entryList[i][3], str(entryList[i][4]), str(entryList[i][5]))
 					configFile.write(line)
 				except:
 					configFile.close()
@@ -182,7 +185,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 
 	def selectionChanged(self):
 		if not self.builderror:
-			self["entryinfo"].setText("%d / %d" %(self["menulist"].getSelectedIndex()+1, self.counter))
+			self["entryinfo"].setText("%d / %d" % (self["menulist"].getSelectedIndex() + 1, self.counter))
 
 	def mountall(self):
 		if not self.builderror:
@@ -195,7 +198,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 
 	def addEntry(self):
 		if not self.builderror:
-			menu = [(_("Add new entry"), "new")] 
+			menu = [(_("Add new entry"), "new")]
 			selectedEntry = self["menulist"].getSelectedIndex()
 			if selectedEntry and not self.checkSoftwareEntry(entryList[selectedEntry][0]):
 				menu.append((_("Clone selected entry"), "clone"))
@@ -208,7 +211,7 @@ class fstabViewerScreen(Screen,HelpableScreen):
 							self.addNewEntry()
 						elif choice[1] == "clone":
 							self.cloneEntry()
-				self.session.openWithCallback(setAction, ChoiceBox, title= _("Select action:"), list=menu)
+				self.session.openWithCallback(setAction, ChoiceBox, title=_("Select action:"), list=menu)
 
 	def cloneEntry(self):
 		if not self.builderror:
@@ -239,9 +242,10 @@ class fstabViewerScreen(Screen,HelpableScreen):
 					self.session.open(MessageBox, _("fstab restored!"), MessageBox.TYPE_INFO, timeout=5)
 					self.builderror = False
 					self.buildScreen()
-			self.session.openWithCallback(setAction, ChoiceBox, title= _("Select action:"), list=list)
+			self.session.openWithCallback(setAction, ChoiceBox, title=_("Select action:"), list=list)
 		else:
 			self.session.open(MessageBox, _("Not found restore file!"), MessageBox.TYPE_ERROR, timeout=5)
+
 
 class fstabEditorScreen(Screen, ConfigListScreen, HelpableScreen):
 	skin = """
@@ -302,20 +306,20 @@ class fstabEditorScreen(Screen, ConfigListScreen, HelpableScreen):
 		self["VKeyIcon"] = Boolean(False)
 		self["HelpWindow"] = Pixmap()
 		self["HelpWindow"].hide()
-		if 	self.addEntry:
-			self.devicename = NoSave(ConfigText(default = "", fixed_size = False))
-			self.mountpoint = NoSave(ConfigText(default = "", fixed_size = False))
-			self.fstype = NoSave(ConfigSelection([("auto", "auto"),("ext2", "ext2"),("ext3", "ext3"),("ext4", "ext4"),("cifs","cifs"),("nfs", "nfs"),("swap", "swap"),("btrfs", "btrfs"),("ntfs-3g", "ntfs-3g"),("vfat", "vfat"),("fat", "fat"),("ntfs", "ntfs"),("udf", "udf"),("iso9660", "iso9660"),("cdfs", "cdfs"),("exfat", "exfat")], default = "auto"))
-			self.options = NoSave(ConfigText(default = "defaults", fixed_size = False))
+		if self.addEntry:
+			self.devicename = NoSave(ConfigText(default="", fixed_size=False))
+			self.mountpoint = NoSave(ConfigText(default="", fixed_size=False))
+			self.fstype = NoSave(ConfigSelection([("auto", "auto"), ("ext2", "ext2"), ("ext3", "ext3"), ("ext4", "ext4"), ("cifs", "cifs"), ("nfs", "nfs"), ("swap", "swap"), ("btrfs", "btrfs"), ("ntfs-3g", "ntfs-3g"), ("vfat", "vfat"), ("fat", "fat"), ("ntfs", "ntfs"), ("udf", "udf"), ("iso9660", "iso9660"), ("cdfs", "cdfs"), ("exfat", "exfat")], default="auto"))
+			self.options = NoSave(ConfigText(default="defaults", fixed_size=False))
 			self.dumpfreq = NoSave(ConfigInteger(limits=(0, 1), default=0))
-			self.passnum = NoSave(ConfigSelection([("0","0"),("1","1"),("2","2")], default = "0"))
+			self.passnum = NoSave(ConfigSelection([("0", "0"), ("1", "1"), ("2", "2")], default="0"))
 		else:
-			self.devicename = NoSave(ConfigText(fixed_size = False, default = entryList[self.selectedEntry][0]))
-			self.mountpoint = NoSave(ConfigText(fixed_size = False, default = entryList[self.selectedEntry][1]))
-			self.fstype = NoSave(ConfigSelection([("auto", "auto"),("ext2", "ext2"),("ext3", "ext3"),("ext4", "ext4"),("cifs", "cifs"),("nfs", "nfs"),("swap", "swap"),("btrfs", "btrfs"),("ntfs-3g", "ntfs-3g"),("vfat", "vfat"),("fat", "fat"),("ntfs", "ntfs"),("udf", "udf"),("iso9660", "iso9660"),("cdfs", "cdfs"),("exfat", "exfat")], default = entryList[self.selectedEntry][2]))
-			self.options = NoSave(ConfigText(fixed_size = False, default = entryList[self.selectedEntry][3]))
-			self.dumpfreq = NoSave(ConfigInteger(limits=(0, 1), default = int(entryList[self.selectedEntry][4])))
-			self.passnum = NoSave(ConfigSelection([("0","0"),("1","1"),("2","2")], default = entryList[self.selectedEntry][5]))
+			self.devicename = NoSave(ConfigText(fixed_size=False, default=entryList[self.selectedEntry][0]))
+			self.mountpoint = NoSave(ConfigText(fixed_size=False, default=entryList[self.selectedEntry][1]))
+			self.fstype = NoSave(ConfigSelection([("auto", "auto"), ("ext2", "ext2"), ("ext3", "ext3"), ("ext4", "ext4"), ("cifs", "cifs"), ("nfs", "nfs"), ("swap", "swap"), ("btrfs", "btrfs"), ("ntfs-3g", "ntfs-3g"), ("vfat", "vfat"), ("fat", "fat"), ("ntfs", "ntfs"), ("udf", "udf"), ("iso9660", "iso9660"), ("cdfs", "cdfs"), ("exfat", "exfat")], default=entryList[self.selectedEntry][2]))
+			self.options = NoSave(ConfigText(fixed_size=False, default=entryList[self.selectedEntry][3]))
+			self.dumpfreq = NoSave(ConfigInteger(limits=(0, 1), default=int(entryList[self.selectedEntry][4])))
+			self.passnum = NoSave(ConfigSelection([("0", "0"), ("1", "1"), ("2", "2")], default=entryList[self.selectedEntry][5]))
 
 		self.list.append(getConfigListEntry(_("device name: "), self.devicename))
 		self.list.append(getConfigListEntry(_("mount point: "), self.mountpoint))

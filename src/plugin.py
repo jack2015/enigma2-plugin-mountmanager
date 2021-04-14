@@ -27,7 +27,7 @@ import fstabViewer
 plugin_version = "2.8"
 
 # Equivalent of the _IO('U', 20) constant in the linux kernel.
-USBDEVFS_RESET = ord('U') << (4*2) | 20 # same as USBDEVFS_RESET= 21780
+USBDEVFS_RESET = ord('U') << (4 * 2) | 20 # same as USBDEVFS_RESET= 21780
 EXT_LSUSB = "/usr/bin/lsusb"
 update_usb_ids = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/update-usbids.sh"
 make_exfat = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/make-exfat.sh"
@@ -77,6 +77,7 @@ elif os.path.exists("/proc/stb/info/gbmodel") and not os.path.exists("/proc/stb/
 	except:
 		pass
 
+
 class DevicesMountPanel(Screen, ConfigListScreen):
 	skin = """
 	<screen position="center,center" size="680,462" title="Mount Manager">
@@ -116,7 +117,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		self['key_blue'] = Label(_("Mount"))
 		self['key_menu'] = Label(_("Setup Mounts"))
 		self['lab1'] = Label()
-		self.onChangedEntry = [ ]
+		self.onChangedEntry = []
 		self.list = []
 		self.mbox = None
 		self.Console = None
@@ -152,7 +153,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		if self.sel:
 			try:
 				name = str(self.sel[0])
-				desc = str(self.sel[1].replace('\t','  '))
+				desc = str(self.sel[1].replace('\t', '  '))
 			except:
 				name = ""
 				desc = ""
@@ -162,7 +163,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		for cb in self.onChangedEntry:
 			cb(name, desc)
 
-	def updateList(self, result = None, retval = None, extra_args = None):
+	def updateList(self, result=None, retval=None, extra_args=None):
 		scanning = _("Wait please while scanning for devices...")
 		self['lab1'].setText(scanning)
 		self.activityTimer.start(500)
@@ -182,17 +183,17 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			self.selectionChanged()
 			return
 		for line in f.readlines():
-			mount_list =[]
+			mount_list = []
 			parts = line.strip().split()
 			if not parts:
 				continue
 			device = parts[3]
 			mmc = False
-			if MODEL_NAME in ('sf8008', 'sf5008', 'et13000', 'et11000','et1x000', 'duo4k', 'duo4kse', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gbquad4k', 'gbue4k', 'lunix3-4k', 'lunix-4k', 'vs1500', 'h7', '8100s', 'e4hd', 'gbmv200', 'multibox', 'h9combo', 'h10', 'v8plus', 'hd60', 'hd61') and search('mmcblk0p[1-9]',device):
+			if MODEL_NAME in ('sf8008', 'sf5008', 'et13000', 'et11000', 'et1x000', 'duo4k', 'duo4kse', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gbquad4k', 'gbue4k', 'lunix3-4k', 'lunix-4k', 'vs1500', 'h7', '8100s', 'e4hd', 'gbmv200', 'multibox', 'h9combo', 'h10', 'v8plus', 'hd60', 'hd61') and search('mmcblk0p[1-9]', device):
 				continue
-			if device and search('mmcblk[0-9]p[1-9]',device):
+			if device and search('mmcblk[0-9]p[1-9]', device):
 				mmc = True
-			if not mmc and not search('sd[a-z][1-9]',device):
+			if not mmc and not search('sd[a-z][1-9]', device):
 				continue
 			if device in list2:
 				continue
@@ -200,7 +201,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				if x.find(device) != -1 and x not in mount_list and '/omb' not in x:
 					parts = x.strip().split()
 					d1 = parts[1]
-					mount_list.append(d1) 
+					mount_list.append(d1)
 			self.buildMy_rec(device, mount_list)
 			list2.append(device)
 		f.close()
@@ -208,7 +209,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		self['lab1'].hide()
 		self.selectionChanged()
 
-	def buildMy_rec(self, device, moremount = []):
+	def buildMy_rec(self, device, moremount=[]):
 		global device2
 		device2 = ''
 		card = False
@@ -354,7 +355,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			swapdevices = ''
 		if os.path.exists('/tmp/devices.tmp'):
 			os.remove('/tmp/devices.tmp')
-		swapdevices = swapdevices.replace('\n','')
+		swapdevices = swapdevices.replace('\n', '')
 		swapdevices = swapdevices.split('/')
 		f = open('/proc/mounts', 'r')
 		for line in f.readlines():
@@ -385,7 +386,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				parts = line.strip().split()
 				size = int(parts[2])
 				if (((float(size) / 1024) / 1024) / 1024) > 1:
-					des = _("Size: ") + str(round((((float(size) / 1024) / 1024) / 1024),2)) + " " + _("TB")
+					des = _("Size: ") + str(round((((float(size) / 1024) / 1024) / 1024), 2)) + " " + _("TB")
 				elif ((size / 1024) / 1024) > 1:
 					capacity = (size / 1024) / 1024
 					des = _("Size: ") + str(capacity) + " " + _("GB")
@@ -402,7 +403,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				except:
 					size = 0
 				if ((((float(size) / 2) / 1024) / 1024) / 1024) > 1:
-					des = _("Size: ") + str(round(((((float(size) / 2) / 1024) / 1024) / 1024),2)) + _("TB")
+					des = _("Size: ") + str(round(((((float(size) / 2) / 1024) / 1024) / 1024), 2)) + _("TB")
 				elif (((size / 2) / 1024) / 1024) > 1:
 					capacity = ((size / 2) / 1024) / 1024
 					des = _("Size: ") + str(capacity) + " " + _("GB")
@@ -447,7 +448,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		#else:
 		#	self.session.open(MessageBox, _("'%s' not found!") % EXT_LSUSB, MessageBox.TYPE_ERROR, timeout=5)
 
-	def openListUSBdeviceAnswer(self, result = None, retval = None, extra_args = None):
+	def openListUSBdeviceAnswer(self, result=None, retval=None, extra_args=None):
 		if result is None:
 			self.session.open(MessageBox, _("Error response '%s'!") % EXT_LSUSB, MessageBox.TYPE_ERROR, timeout=5)
 		else:
@@ -474,9 +475,9 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				def ChoiceAction(choice):
 					if choice is not None:
 						self.send_reset(choice[1])
-				self.session.openWithCallback(ChoiceAction, ChoiceBox, list = entrylist, title= _("Select device for reset:"))
+				self.session.openWithCallback(ChoiceAction, ChoiceBox, list=entrylist, title=_("Select device for reset:"))
 
-	def send_reset(self, dev_path = ''):
+	def send_reset(self, dev_path=''):
 		if dev_path != '':
 			if not fileExists(dev_path):
 				self.session.open(MessageBox, _("'%s' not found!") % dev_path, MessageBox.TYPE_ERROR, timeout=5)
@@ -500,7 +501,8 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		self.session.openWithCallback(self.updateList, DeviceMountPanelConf)
 
 	def Mount(self):
-		if len(self['list'].list) < 1: return
+		if len(self['list'].list) < 1:
+			return
 		sel = self['list'].getCurrent()
 		if sel:
 			des = sel[1]
@@ -521,11 +523,11 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				self.session.openWithCallback(
 				self.menuCallback,
 				ChoiceBox,
-				list = mountlist,
-				title= adv_title + _("Select mount action for %s:") % device,
+				list=mountlist,
+				title=adv_title + _("Select mount action for %s:") % device,
 				)
 
-	def menuCallback(self, ret = None):
+	def menuCallback(self, ret=None):
 		ret and ret[1]()
 
 	def MountCur3(self):
@@ -554,7 +556,8 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			self.Console.ePopen("/sbin/blkid | grep " + self.device, self.cur_in_fstab, [self.device, self.mountp])
 
 	def MountCur1(self):
-		if len(self['list'].list) < 1: return
+		if len(self['list'].list) < 1:
+			return
 		system('mount -a')
 		self.updateList()
 
@@ -580,7 +583,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				mountdir = '/media/%s' % (devicemount)
 				if not os.path.exists(mountdir):
 					os.mkdir(mountdir, 0755)
-				system ('mount ' + device + ' /media/%s' % (devicemount))
+				system('mount ' + device + ' /media/%s' % (devicemount))
 				mountok = False
 				f = open('/proc/mounts', 'r')
 				for line in f.readlines():
@@ -591,16 +594,16 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 					self.session.open(MessageBox, _("Mount failed!"), MessageBox.TYPE_ERROR, timeout=5)
 				self.updateList()
 
-	def cur_in_fstab(self, result = None, retval = None, extra_args = None):
+	def cur_in_fstab(self, result=None, retval=None, extra_args=None):
 		self.device = extra_args[0]
 		self.mountp = extra_args[1]
 		self.device_uuid_tmp = result.split('UUID=')
 		if str(self.device_uuid_tmp) != "['']":
 			try:
-				self.device_uuid_tmp = self.device_uuid_tmp[1].replace('TYPE="ext2"','').replace('TYPE="ext3"','').replace('TYPE="ext4"','').replace('TYPE="ntfs"','').replace('TYPE="exfat"','').replace('TYPE="vfat"','').replace('"','')
-				self.device_uuid_tmp = self.device_uuid_tmp.replace('\n',"")
+				self.device_uuid_tmp = self.device_uuid_tmp[1].replace('TYPE="ext2"', '').replace('TYPE="ext3"', '').replace('TYPE="ext4"', '').replace('TYPE="ntfs"', '').replace('TYPE="exfat"', '').replace('TYPE="vfat"', '').replace('"', '')
+				self.device_uuid_tmp = self.device_uuid_tmp.replace('\n', "")
 				self.device_uuid = 'UUID=' + self.device_uuid_tmp
-				system ('mount ' + self.device_uuid)
+				system('mount ' + self.device_uuid)
 				mountok = False
 				f = open('/proc/mounts', 'r')
 				for line in f.readlines():
@@ -616,7 +619,8 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		self.updateList()
 
 	def Unmount(self):
-		if len(self['list'].list) < 1: return
+		if len(self['list'].list) < 1:
+			return
 		sel = self['list'].getCurrent()
 		if sel:
 			des = sel[1]
@@ -625,8 +629,9 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			mountp = parts[1].replace(_("Mount: "), '')
 			device = parts[2].replace(_("Device: "), '')
 			print mountp
-			if mountp == _("None"): return
-			message = _('Really unmount ') + device + _(" from ") +  mountp + " ?"
+			if mountp == _("None"):
+				return
+			message = _('Really unmount ') + device + _(" from ") + mountp + " ?"
 			self.session.openWithCallback(self.UnmountAnswer, MessageBox, message, MessageBox.TYPE_YESNO)
 
 	def UnmountAnswer(self, answer):
@@ -657,12 +662,13 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 					if mountp in line and device in line and '/omb' not in line:
 						parts = line.strip().split(" ")
 						if parts[1] == mountp:
-							self.session.open(MessageBox, _("Can't unmount partiton, make sure it is not being used for swap or record/timeshift paths!"), MessageBox.TYPE_ERROR, timeout = 5, close_on_any_key = True)
+							self.session.open(MessageBox, _("Can't unmount partiton, make sure it is not being used for swap or record/timeshift paths!"), MessageBox.TYPE_ERROR, timeout=5, close_on_any_key=True)
 							break
 				self.updateList()
 
 	def saveMypoints(self):
-		if len(self['list'].list) < 1: return
+		if len(self['list'].list) < 1:
+			return
 		sel = self['list'].getCurrent()
 		if sel:
 			des = sel[1]
@@ -686,7 +692,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				if self.mountp.find('/media/hdd') < 0:
 					pass
 				else:
-					self.session.open(MessageBox, _("This Device is already mounted as HDD."), MessageBox.TYPE_INFO, timeout = 6, close_on_any_key = True)
+					self.session.open(MessageBox, _("This Device is already mounted as HDD."), MessageBox.TYPE_INFO, timeout=6, close_on_any_key=True)
 					return
 				system('[ -e /media/hdd/swapfile ] && swapoff /media/hdd/swapfile')
 				#system('[ -e /etc/init.d/transmissiond ] && /etc/init.d/transmissiond stop')
@@ -709,13 +715,13 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 					system('umount ' + self.device)
 					self.Console.ePopen("/sbin/blkid | grep " + self.device, self.add_fstab, [self.device, self.mountp])
 
-	def add_fstab(self, result = None, retval = None, extra_args = None):
+	def add_fstab(self, result=None, retval=None, extra_args=None):
 		self.device = extra_args[0]
 		self.mountp = extra_args[1]
 		self.device_uuid_tmp = result.split('UUID=')
 		if str(self.device_uuid_tmp) != "['']":
-			self.device_uuid_tmp = self.device_uuid_tmp[1].replace('TYPE="ext2"','').replace('TYPE="ext3"','').replace('TYPE="ext4"','').replace('TYPE="ntfs"','').replace('TYPE="exfat"','').replace('TYPE="vfat"','').replace('TYPE="xfs"','').replace('"','')
-			self.device_uuid_tmp = self.device_uuid_tmp.replace('\n',"")
+			self.device_uuid_tmp = self.device_uuid_tmp[1].replace('TYPE="ext2"', '').replace('TYPE="ext3"', '').replace('TYPE="ext4"', '').replace('TYPE="ntfs"', '').replace('TYPE="exfat"', '').replace('TYPE="vfat"', '').replace('TYPE="xfs"', '').replace('"', '')
+			self.device_uuid_tmp = self.device_uuid_tmp.replace('\n', "")
 			self.device_uuid = 'UUID=' + self.device_uuid_tmp
 			if not os.path.exists(self.mountp):
 				os.mkdir(self.mountp, 0755)
@@ -730,11 +736,11 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				except:
 					pass
 			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if '/media/hdd' not in l])
-			os.rename('/etc/fstab.tmp','/etc/fstab')
+			os.rename('/etc/fstab.tmp', '/etc/fstab')
 			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.device not in l])
-			os.rename('/etc/fstab.tmp','/etc/fstab')
+			os.rename('/etc/fstab.tmp', '/etc/fstab')
 			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.device_uuid not in l])
-			os.rename('/etc/fstab.tmp','/etc/fstab')
+			os.rename('/etc/fstab.tmp', '/etc/fstab')
 			out = open('/etc/fstab', 'a')
 			line = self.device_uuid + '\t/media/hdd\tauto\tdefaults\t0  2\n'
 			if flashexpander is not None:
@@ -748,6 +754,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			self.session.open(TryQuitMainloop, 2)
 		else:
 			self.updateList()
+
 
 class DeviceMountPanelConf(Screen, ConfigListScreen):
 	skin = """
@@ -796,7 +803,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			swapdevices = ''
 		if os.path.exists('/tmp/devices.tmp'):
 			os.remove('/tmp/devices.tmp')
-		swapdevices = swapdevices.replace('\n','')
+		swapdevices = swapdevices.replace('\n', '')
 		swapdevices = swapdevices.split('/')
 		f = open('/proc/partitions', 'r')
 		for line in f.readlines():
@@ -805,11 +812,11 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				continue
 			device = parts[3]
 			mmc = False
-			if MODEL_NAME in ('sf8008', 'sf5008', 'et13000', 'et11000', 'et1x000', 'duo4k', 'duo4kse', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gbquad4k', 'gbue4k', 'lunix3-4k', 'lunix-4k', 'vs1500', 'h7', '8100s', 'e4hd', 'gbmv200', 'multibox', 'h9combo', 'h10', 'v8plus', 'hd60', 'hd61') and search('mmcblk0p[1-9]',device):
+			if MODEL_NAME in ('sf8008', 'sf5008', 'et13000', 'et11000', 'et1x000', 'duo4k', 'duo4kse', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gbquad4k', 'gbue4k', 'lunix3-4k', 'lunix-4k', 'vs1500', 'h7', '8100s', 'e4hd', 'gbmv200', 'multibox', 'h9combo', 'h10', 'v8plus', 'hd60', 'hd61') and search('mmcblk0p[1-9]', device):
 				continue
-			if device and search('mmcblk[0-9]p[1-9]',device):
+			if device and search('mmcblk[0-9]p[1-9]', device):
 				mmc = True
-			if not mmc and not search('sd[a-z][1-9]',device):
+			if not mmc and not search('sd[a-z][1-9]', device):
 				continue
 			if device in list2:
 				continue
@@ -972,7 +979,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				parts = line.strip().split()
 				size = int(parts[2])
 				if (((float(size) / 1024) / 1024) / 1024) > 1:
-					des = _("Size: ") + str(round((((float(size) / 1024) / 1024) / 1024),2)) + " " + _("TB")
+					des = _("Size: ") + str(round((((float(size) / 1024) / 1024) / 1024), 2)) + " " + _("TB")
 				elif ((size / 1024) / 1024) > 1:
 					des = _("Size: ") + str((size / 1024) / 1024) + " " + _("GB")
 				else:
@@ -985,7 +992,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				except:
 					size = 0
 				if ((((float(size) / 2) / 1024) / 1024) / 1024) > 1:
-					des = _("Size: ") + str(round(((((float(size) / 2) / 1024) / 1024) / 1024),2)) + " " + _("TB")
+					des = _("Size: ") + str(round(((((float(size) / 2) / 1024) / 1024) / 1024), 2)) + " " + _("TB")
 				elif (((size / 2) / 1024) / 1024) > 1:
 					des = _("Size: ") + str(((size / 2) / 1024) / 1024) + " " + _("GB")
 				else:
@@ -1032,24 +1039,24 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			self.session.openWithCallback(
 			self.menuCallback,
 			ChoiceBox,
-			list = mylist,
-			title = _("TRIM (if supported) working only for SSD device.\nRequires filesystem ext4 and flag discard."),
+			list=mylist,
+			title=_("TRIM (if supported) working only for SSD device.\nRequires filesystem ext4 and flag discard."),
 			)
 
 	def trimaction1(self):
 		from Screens.Console import Console as myConsole
 		cmd = "/sbin/tune2fs -o discard %s && /sbin/tune2fs -l %s | grep 'Default mount options'" % (self.label_device, self.label_device)
-		self.session.open(myConsole,_("Set discard mount option"),[cmd])
+		self.session.open(myConsole, _("Set discard mount option"), [cmd])
 
 	def trimaction2(self):
 		from Screens.Console import Console as myConsole
 		cmd = "/sbin/tune2fs -o^discard %s && /sbin/tune2fs -l %s | grep 'Default mount options'" % (self.label_device, self.label_device)
-		self.session.open(myConsole,_("Unset discard mount option"),[cmd])
+		self.session.open(myConsole, _("Unset discard mount option"), [cmd])
 
 	def trimaction3(self):
 		from Screens.Console import Console as myConsole
 		cmd = "/sbin/tune2fs -l %s | grep 'Default mount options'" % self.label_device
-		self.session.open(myConsole,_("Show discard status"),[cmd])
+		self.session.open(myConsole, _("Show discard status"), [cmd])
 
 	def editFstab(self):
 		self.session.open(fstabViewer.fstabViewerScreen)
@@ -1091,7 +1098,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				self.label_device = ""
 				self.close()
 
-	def delCurrentUUID(self, result = None, retval = None, extra_args = None):
+	def delCurrentUUID(self, result=None, retval=None, extra_args=None):
 		self.device = extra_args[0]
 		if result and self.device in result:
 			pass
@@ -1099,8 +1106,8 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			return
 		self.device_uuid_tmp = result.split('UUID=')
 		if str(self.device_uuid_tmp) != "['']":
-			self.device_uuid_tmp = self.device_uuid_tmp[1].replace('TYPE="ext2"','').replace('TYPE="ext3"','').replace('TYPE="ext4"','').replace('TYPE="ntfs"','').replace('TYPE="exfat"','').replace('TYPE="vfat"','').replace('TYPE="xfs"','').replace('"','')
-			self.device_uuid_tmp = self.device_uuid_tmp.replace('\n',"")
+			self.device_uuid_tmp = self.device_uuid_tmp[1].replace('TYPE="ext2"', '').replace('TYPE="ext3"', '').replace('TYPE="ext4"', '').replace('TYPE="ntfs"', '').replace('TYPE="exfat"', '').replace('TYPE="vfat"', '').replace('TYPE="xfs"', '').replace('"', '')
+			self.device_uuid_tmp = self.device_uuid_tmp.replace('\n', "")
 			self.device_uuid = 'UUID=' + self.device_uuid_tmp
 			flashexpander = None
 			if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyo") and fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/flashexpander.pyo"):
@@ -1113,9 +1120,9 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				except:
 					pass
 			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.device not in l])
-			os.rename('/etc/fstab.tmp','/etc/fstab')
+			os.rename('/etc/fstab.tmp', '/etc/fstab')
 			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.device_uuid not in l])
-			os.rename('/etc/fstab.tmp','/etc/fstab')
+			os.rename('/etc/fstab.tmp', '/etc/fstab')
 			if flashexpander is not None:
 				out = open('/etc/fstab', 'a')
 				line = flashexpander
@@ -1145,79 +1152,79 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			mylist.append((_("update usb.ids (www.linux-usb.org)"), self.action12))
 		if not self.spinDown() and fileExists('/etc/init.d/umountfs'):
 			mylist.append((_("Spin down HDD before shutdown box"), self.action18))
-		self.session.openWithCallback(self.menuCallback, ChoiceBox, list = mylist,title= _("Select system info or install module:"))
+		self.session.openWithCallback(self.menuCallback, ChoiceBox, list=mylist, title=_("Select system info or install module:"))
 
 	def action1(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****mount*****"),["mount"])
+		self.session.open(myConsole, _("*****mount*****"), ["mount"])
 
 	def action2(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****df -h*****"),["df -h"])
+		self.session.open(myConsole, _("*****df -h*****"), ["df -h"])
 
 	def action3(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****sfdisk -l*****"),["sfdisk -l"])
-		
+		self.session.open(myConsole, _("*****sfdisk -l*****"), ["sfdisk -l"])
+
 	def action4(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****blkid*****"),["blkid"])
+		self.session.open(myConsole, _("*****blkid*****"), ["blkid"])
 
 	def action5(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****kernel-module-ext2*****"),["opkg install kernel-module-ext2"])
+		self.session.open(myConsole, _("*****kernel-module-ext2*****"), ["opkg install kernel-module-ext2"])
 
 	def action6(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****kernel-module-ext3*****"),["opkg install kernel-module-ext3"])
+		self.session.open(myConsole, _("*****kernel-module-ext3*****"), ["opkg install kernel-module-ext3"])
 
 	def action7(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****e2fsprogs*****"),["opkg install e2fsprogs"])
+		self.session.open(myConsole, _("*****e2fsprogs*****"), ["opkg install e2fsprogs"])
 
 	def action8(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****e2fsprogs-tune2fs*****"),["opkg install e2fsprogs-tune2fs"])
+		self.session.open(myConsole, _("*****e2fsprogs-tune2fs*****"), ["opkg install e2fsprogs-tune2fs"])
 
 	def action9(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****fdisk*****"),["opkg install util-linux-fdisk"])
+		self.session.open(myConsole, _("*****fdisk*****"), ["opkg install util-linux-fdisk"])
 
 	def action10(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****util-linux-blkid*****"),["opkg install util-linux-blkid"])
+		self.session.open(myConsole, _("*****util-linux-blkid*****"), ["opkg install util-linux-blkid"])
 
 	def action11(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****eject DVD*****"),["eject /dev/sr0"])
+		self.session.open(myConsole, _("*****eject DVD*****"), ["eject /dev/sr0"])
 
 	def action12(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****usb.ids*****"),["chmod 755 %s && %s" % (update_usb_ids, update_usb_ids)])
+		self.session.open(myConsole, _("*****usb.ids*****"), ["chmod 755 %s && %s" % (update_usb_ids, update_usb_ids)])
 
 	def action13(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****hdparm*****"),["opkg install hdparm"])
+		self.session.open(myConsole, _("*****hdparm*****"), ["opkg install hdparm"])
 
 	def action14(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****fuse-exfat*****"),["opkg install fuse-exfat && chmod 755 %s && %s" % (make_exfat, make_exfat)])
+		self.session.open(myConsole, _("*****fuse-exfat*****"), ["opkg install fuse-exfat && chmod 755 %s && %s" % (make_exfat, make_exfat)])
 
 	def action15(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****ntfs-3g*****"),["opkg install ntfs-3g"])
+		self.session.open(myConsole, _("*****ntfs-3g*****"), ["opkg install ntfs-3g"])
 
 	def action16(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****smartmontools*****"),["opkg install smartmontools"])
+		self.session.open(myConsole, _("*****smartmontools*****"), ["opkg install smartmontools"])
 
 	def action17(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****parted*****"),["opkg install parted"])
+		self.session.open(myConsole, _("*****parted*****"), ["opkg install parted"])
 
 	def action18(self):
 		from Screens.Console import Console as myConsole
-		self.session.open(myConsole,_("*****Spin down HDD*****"),["cp %s /etc/init.d/umountfs && chmod 755 /etc/init.d/umountfs && cat /etc/init.d/umountfs" % umountfs])
+		self.session.open(myConsole, _("*****Spin down HDD*****"), ["cp %s /etc/init.d/umountfs && chmod 755 /etc/init.d/umountfs && cat /etc/init.d/umountfs" % umountfs])
 
 	def spinDown(self):
 		try:
@@ -1230,18 +1237,19 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 		return False
 
 	def saveMypoints(self):
-		if len(self['config'].list) < 1: return
+		if len(self['config'].list) < 1:
+			return
 		message = _("Really save in fstab mount by UUID:\n")
 		val = []
 		for x in self['config'].list:
 			device = x[2]
 			mountp = x[1].value
-			if mountp not in val: 
+			if mountp not in val:
 				val.append((mountp))
 			else:
 				self.session.open(MessageBox, _("Error!\nThe same mount point!"), MessageBox.TYPE_ERROR, timeout=5)
 				return
-			message += '/dev/' + device + _(" as ") +  mountp + "\n"
+			message += '/dev/' + device + _(" as ") + mountp + "\n"
 		self.session.openWithCallback(self.saveMypointsAnswer, MessageBox, message, MessageBox.TYPE_YESNO)
 
 	def saveMypointsAnswer(self, answer):
@@ -1255,7 +1263,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				self.mountp = x[1].value
 				self.type = x[3]
 				self.Console.ePopen('umount -f /dev/%s 2>&1' % (self.device))
-				self.Console.ePopen("/sbin/blkid | grep " + self.device, self.add_fstab, [self.device, self.mountp] )
+				self.Console.ePopen("/sbin/blkid | grep " + self.device, self.add_fstab, [self.device, self.mountp])
 				self.Checktimer.stop()
 				self.Checktimer.start(2500, True)
 
@@ -1263,7 +1271,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 		self.checkMount = False
 		file_mounts = '/proc/mounts'
 		if fileExists(file_mounts):
-			fd = open(file_mounts,'r')
+			fd = open(file_mounts, 'r')
 			lines_mount = fd.readlines()
 			fd.close()
 			for line in lines_mount:
@@ -1288,8 +1296,8 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			self.session.openWithCallback(
 			self.menuCallback,
 			ChoiceBox,
-			list = mylist,
-			title= _("All device umount.Select action:"),
+			list=mylist,
+			title=_("All device umount.Select action:"),
 			)
 
 	def answerRestart(self):
@@ -1298,20 +1306,20 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 	def answerExit(self):
 		self.close()
 
-	def menuCallback(self, ret = None):
+	def menuCallback(self, ret=None):
 		ret and ret[1]()
 
 	def AllMount(self):
 		system('mount -a')
 		self.close()
 
-	def add_fstab(self, result = None, retval = None, extra_args = None):
+	def add_fstab(self, result=None, retval=None, extra_args=None):
 		self.device = extra_args[0]
 		self.mountp = extra_args[1]
 		self.device_uuid_tmp = result.split('UUID=')
 		if str(self.device_uuid_tmp) != "['']":
-			self.device_uuid_tmp = self.device_uuid_tmp[1].replace('TYPE="ext2"','').replace('TYPE="ext3"','').replace('TYPE="ext4"','').replace('TYPE="ntfs"','').replace('TYPE="exfat"','').replace('TYPE="vfat"','').replace('TYPE="xfs"','').replace('"','')
-			self.device_uuid_tmp = self.device_uuid_tmp.replace('\n',"")
+			self.device_uuid_tmp = self.device_uuid_tmp[1].replace('TYPE="ext2"', '').replace('TYPE="ext3"', '').replace('TYPE="ext4"', '').replace('TYPE="ntfs"', '').replace('TYPE="exfat"', '').replace('TYPE="vfat"', '').replace('TYPE="xfs"', '').replace('"', '')
+			self.device_uuid_tmp = self.device_uuid_tmp.replace('\n', "")
 			self.device_uuid = 'UUID=' + self.device_uuid_tmp
 			if not os.path.exists(self.mountp):
 				os.mkdir(self.mountp, 0755)
@@ -1327,11 +1335,11 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 					pass
 			#if self.mountp == '/media/hdd':
 			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.mountp not in l])
-			os.rename('/etc/fstab.tmp','/etc/fstab')
+			os.rename('/etc/fstab.tmp', '/etc/fstab')
 			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.device not in l])
-			os.rename('/etc/fstab.tmp','/etc/fstab')
+			os.rename('/etc/fstab.tmp', '/etc/fstab')
 			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.device_uuid not in l])
-			os.rename('/etc/fstab.tmp','/etc/fstab')
+			os.rename('/etc/fstab.tmp', '/etc/fstab')
 			out = open('/etc/fstab', 'a')
 			line = self.device_uuid + '\t' + self.mountp + '\tauto\tdefaults\t0  2\n'
 			if flashexpander is not None:
@@ -1345,9 +1353,10 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 		else:
 			self.close()
 
+
 class DevicesMountPanelSummary(SetupSummary):
 	def __init__(self, session, parent):
-		SetupSummary.__init__(self, session, parent = parent)
+		SetupSummary.__init__(self, session, parent=parent)
 		self.skinName = ["DevicesMountPanelSummary", "SetupSummary"]
 
 	def addWatcher(self):
@@ -1361,14 +1370,17 @@ class DevicesMountPanelSummary(SetupSummary):
 		self["SetupEntry"].text = name
 		self["SetupValue"].text = desc
 
+
 def StartSetup(menuid, **kwargs):
 	if menuid == "system":
 		return [(_("Mount Manager"), OpenSetup, "mountpoints_setup", None)]
 	else:
 		return []
 
+
 def OpenSetup(session, **kwargs):
 	session.open(DevicesMountPanel)
 
+
 def Plugins(**kwargs):
-	return [PluginDescriptor(name = "Mount Manager", description = _("Manage you devices mountpoints"), where = PluginDescriptor.WHERE_MENU, fnc = StartSetup)]
+	return [PluginDescriptor(name="Mount Manager", description=_("Manage you devices mountpoints"), where=PluginDescriptor.WHERE_MENU, fnc=StartSetup)]
