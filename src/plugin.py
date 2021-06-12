@@ -597,6 +597,9 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 	def cur_in_fstab(self, result=None, retval=None, extra_args=None):
 		self.device = extra_args[0]
 		self.mountp = extra_args[1]
+		if len(result) == 0:
+			print "[MountManager] error get UUID for device %s" % self.device
+			return
 		self.device_uuid_tmp = result.split('UUID=')
 		if str(self.device_uuid_tmp) != "['']":
 			try:
@@ -718,6 +721,9 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 	def add_fstab(self, result=None, retval=None, extra_args=None):
 		self.device = extra_args[0]
 		self.mountp = extra_args[1]
+		if len(result) == 0:
+			print "[MountManager] error get UUID for device %s" % self.device
+			return
 		self.device_uuid_tmp = result.split('UUID=')
 		if str(self.device_uuid_tmp) != "['']":
 			self.device_uuid_tmp = self.device_uuid_tmp[1].replace('TYPE="ext2"', '').replace('TYPE="ext3"', '').replace('TYPE="ext4"', '').replace('TYPE="ntfs"', '').replace('TYPE="exfat"', '').replace('TYPE="vfat"', '').replace('TYPE="xfs"', '').replace('"', '')
@@ -1316,6 +1322,9 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 	def add_fstab(self, result=None, retval=None, extra_args=None):
 		self.device = extra_args[0]
 		self.mountp = extra_args[1]
+		if len(result) == 0:
+			print "[MountManager] error get UUID for device %s" % self.device
+			return
 		self.device_uuid_tmp = result.split('UUID=')
 		if str(self.device_uuid_tmp) != "['']":
 			self.device_uuid_tmp = self.device_uuid_tmp[1].replace('TYPE="ext2"', '').replace('TYPE="ext3"', '').replace('TYPE="ext4"', '').replace('TYPE="ntfs"', '').replace('TYPE="exfat"', '').replace('TYPE="vfat"', '').replace('TYPE="xfs"', '').replace('"', '')
